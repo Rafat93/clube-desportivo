@@ -1,5 +1,5 @@
 <template>
-  <v-app >
+  <v-app light>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -71,6 +71,7 @@
 <script>
 export default {
   data () {
+
     return {
       clipped: false,
       drawer: false,
@@ -82,9 +83,13 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-account-multiple',
           title: 'Login',
           to: '/login'
+        },{
+          icon: 'mdi-account-plus',
+          title: 'Register',
+          to: '/register'
         }
       ],
       miniVariant: false,

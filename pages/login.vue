@@ -53,7 +53,7 @@
 
 <script>
     export default {
-        name: "login_form"
+        name: "login"
     }
 </script>
 
