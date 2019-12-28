@@ -4,9 +4,10 @@
     v-model="valid"
     lazy-validation
   >
+    <p class="subtitle-1 text-center">Inscrição de Sócio/Atleta</p>
     <v-text-field
       v-model="name"
-      :counter="10"
+      :counter="30"
       :rules="nameRules"
       label="Nome"
       required
@@ -45,6 +46,47 @@
     ></v-date-picker>
     </v-menu>
 
+    <v-text-field
+      v-model="nif"
+      :rules="nifRules"
+      label="NIF"
+      :counter="9"
+      type="number"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="morada"
+      :rules="moradaRules"
+      label="Morada"
+      :counter="80"
+      required
+    ></v-text-field>
+
+    <v-row>
+      <v-col cols="8">
+        <v-text-field
+          label="Quota anual:"
+          value="12.00"
+          prefix="€"
+          filled
+          readonly
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-checkbox
+      v-model="checkbox"
+      :label="`Atleta: ${checkbox.toString()}`"
+    ></v-checkbox>
+
+    <div v-if="this.checkbox === true">
+
+
+
+
+    </div>
+
     <v-btn
       :disabled="!valid"
       color="success"
@@ -75,14 +117,26 @@
     export default {
         name: "register",
       data: () => ({
+        checkbox: true,
         showPicker: false,
         selectedDate: null,
 
+        morada: '',
+        moradaRules:[
+          v => !!v || 'Morada é um campo obrigatório',
+          v => (v && v.length <= 80 ) || 'Morada deve ter menos de 80 caracteres.',],
+
+        nif: '',
+        nifRules:[
+          v => !!v || 'NIF é um campo obrigatório',
+          v => (v && v.length ===  9) || 'NIF deve ter 9 algarismos. ',],
+
         name: '',
         nameRules: [
-          v => !!v || 'Name is required',
-          v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+          v => !!v || 'Name é um campo obrigatório',
+          v => (v && v.length <= 30) || 'Nome deve ter até 30 caracteres',
         ],
+
         email: '',
         emailRules: [
           v => !!v || 'E-mail is required',
