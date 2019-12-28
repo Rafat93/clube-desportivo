@@ -1,5 +1,7 @@
 <template>
-    $END$
+    <div>
+      ola
+    </div>
 </template>
 
 <script>
