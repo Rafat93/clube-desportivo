@@ -67,10 +67,10 @@
     methods: {
       onSubmit() {
         let promise = this.$auth.loginWith('local', {
-          data: {
-            email: this.email,
-            password: this.password
-          }
+            data: {
+                email: this.email,
+                password: this.password
+            }
         });
         promise.then(() => {
           this.$toast.success('You are logged in!')

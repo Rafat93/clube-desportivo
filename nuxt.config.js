@@ -44,7 +44,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
 
   ],
   /*
