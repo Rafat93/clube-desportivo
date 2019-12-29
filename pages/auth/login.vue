@@ -3,7 +3,6 @@
     fluid
     fill-height
   >
-
     <v-layout
       align-center
       justify-center
@@ -31,7 +30,6 @@
                 type="email"s
                 v-model="email"
               ></v-text-field>
-              {{this.email}}
 
               <v-text-field
                 id="password"
@@ -41,13 +39,13 @@
                 type="password"
                 v-model="password"
               ></v-text-field>
-              {{this.password}}
-              <v-btn type="submit">Submit</v-btn>
+
+              <v-btn type="submit" color="primary" style="margin-left: 35%">Submit</v-btn>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary">Login</v-btn>
+
           </v-card-actions>
         </v-card>
       </v-flex>

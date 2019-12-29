@@ -8,24 +8,57 @@
       app
     >
       <v-list v-if="this.$auth.loggedIn">
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item @click.prevent="logout">
-          <v-list-item-title>Logout</v-list-item-title>
-        </v-list-item>
+        <div v-if="this.$auth.user.groups == 'Administrador'">
+          <v-list-item
+            v-for="(item, i) in itemsAdmin"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.prevent="logout">
+            <v-list-item-action>
+              <v-icon>{{this.itemLogout}}</v-icon>
+            </v-list-item-action>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </div>
+
+
+        <!--  Se não for ADMIN-->
+        <div v-if="this.$auth.user.groups != 'Administrador'">
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.prevent="logout">
+            <v-list-item-action>
+              <v-icon>{{this.itemLogout}}</v-icon>
+            </v-list-item-action>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </div>
       </v-list>
+
+
+
       <v-list v-if="!this.$auth.loggedIn">
         <v-list-item
           v-for="(button, i) in buttons"
@@ -95,6 +128,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      itemLogout: 'mdi-power',
 
       buttons:[
         {
@@ -113,14 +147,34 @@ export default {
         },
       ],
 
+      itemsAdmin: [
+        {
+          icon: 'mdi-apps',
+          title: 'Welcome',
+          to: '/'
+        },
+        {
+          icon: 'mdi-football',
+          title: 'Modalidades',
+          to: '/adminer/modalidades/list'
+        },
+        {
+          icon: 'mdi-run',
+          title: 'Atletas',
+          to: '/adminer/modalidades/list'
+        }
+      ],
       items: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
           to: '/'
         },
-
-
+        {
+          icon: 'mdi-apps',
+          title: 'Coisas',
+          to: '/adminer/modalidades/list'
+        }
       ],
       miniVariant: false,
       right: true,

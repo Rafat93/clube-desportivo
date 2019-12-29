@@ -4,7 +4,7 @@
     v-model="valid"
     lazy-validation
   >
-    <p class="subtitle-1 text-center">Inscrição de Sócio/Atleta</p>
+    <p class="subtitle-1 text-center">Criação de Nova Modalidade</p>
     <v-text-field
       v-model="sigla"
       :counter="5"
@@ -84,6 +84,17 @@
         validate () {
           if (this.$refs.form.validate()) {
             this.snackbar = true
+            this.$axios.$post('/api/modalidades', {
+              sigla: this.sigla,
+              nome: this.nome,
+              epoca: this.epoca,
+            })
+              .then(() => {
+                this.$router.push('/modalidades')
+              })
+              .catch(error => {
+                console.log(error)
+              })
           }
         },
         reset () {
