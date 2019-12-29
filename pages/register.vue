@@ -63,29 +63,28 @@
       required
     ></v-text-field>
 
-    <v-row>
-      <v-col cols="8">
-        <v-text-field
-          label="Quota anual:"
-          value="12.00"
-          prefix="€"
-          filled
-          readonly
-        ></v-text-field>
-      </v-col>
-    </v-row>
+
+    <v-col cols="8">
+      <v-text-field
+        label="Quota anual:"
+        value="12.00"
+        prefix="€"
+        filled
+        readonly
+      ></v-text-field>
+    </v-col>
+
 
     <v-checkbox
       v-model="checkbox"
-      :label="`Atleta: ${checkbox.toString()}`"
+      :label="`Atleta `"
     ></v-checkbox>
 
-    <div v-if="this.checkbox === true">
+    <!--<div v-if="this.checkbox === true">
 
 
 
-
-    </div>
+    </div>-->
 
     <v-btn
       :disabled="!valid"
@@ -117,6 +116,7 @@
     export default {
         name: "register",
       data: () => ({
+        valid: true,
         checkbox: true,
         showPicker: false,
         selectedDate: null,
