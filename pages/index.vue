@@ -1,17 +1,22 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="atletas"
-    :items-per-page="10"
-    class="elevation-1"
-  >
-    <template slot="items" slot-scope="props">
-      <tr @click="props.expanded = !props.expanded">
-        <td class="text-xs">{{ props.item.nome }}</td>
-        <td class="text-xs">{{ props.item.email}}</td>
-      </tr>
-    </template>
-  </v-data-table>
+  <div>
+    {{this.$auth.user}}
+    {{this.$auth.loggedIn}}
+    <v-data-table
+      :headers="headers"
+      :items="atletas"
+      :items-per-page="10"
+      class="elevation-1"
+    >
+      <template slot="items" slot-scope="props">
+        <tr @click="props.expanded = !props.expanded">
+          <td class="text-xs">{{ props.item.nome }}</td>
+          <td class="text-xs">{{ props.item.email}}</td>
+        </tr>
+      </template>
+    </v-data-table>
+  </div>
+
 </template>
 
 <script>
@@ -40,7 +45,9 @@ export default {
     this.$axios.$get('/api/atletas')
       .then((atletas) => {
         this.atletas = atletas
-      })
+      });
+
+
   }
 }
 </script>

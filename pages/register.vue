@@ -159,7 +159,7 @@
         },
       },
 
-
+      middleware: ['auth']
     }
 </script>
 

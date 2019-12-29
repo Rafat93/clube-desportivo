@@ -65,7 +65,7 @@ module.exports = {
   },
   auth: {
     redirect: {
-      login: '/auth/login',
+      login: '/register',
       logout: '/',
       home: '/'
     },
@@ -92,7 +92,7 @@ module.exports = {
   },
   router: {
     middleware: [
-      'auth'
+      //'auth'
     ]
   },
 

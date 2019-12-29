@@ -3,6 +3,7 @@
     fluid
     fill-height
   >
+
     <v-layout
       align-center
       justify-center
@@ -20,7 +21,6 @@
           >
             <v-toolbar-title>Login form</v-toolbar-title>
             <v-spacer></v-spacer>
-
 
           </v-toolbar>
           <v-card-text>
@@ -92,6 +92,9 @@
         this.email = null;
         this.password = null;
       }
+    },
+    mounted() {
+      console.log(this.$auth)
     }
   }
 </script>

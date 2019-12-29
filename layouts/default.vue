@@ -7,7 +7,7 @@
       fixed
       app
     >
-      <v-list>
+      <v-list v-if="this.$auth.loggedIn">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -20,6 +20,25 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item @click.prevent="logout">
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+      </v-list>
+      <v-list v-if="!this.$auth.loggedIn">
+        <v-list-item
+          v-for="(button, i) in buttons"
+          :key="i"
+          :to="button.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ button.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="button.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -76,7 +95,8 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+
+      buttons:[
         {
           icon: 'mdi-apps',
           title: 'Welcome',
@@ -90,12 +110,28 @@ export default {
           icon: 'mdi-account-plus',
           title: 'Register',
           to: '/register'
-        }
+        },
+      ],
+
+      items: [
+        {
+          icon: 'mdi-apps',
+          title: 'Welcome',
+          to: '/'
+        },
+
+
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Clube Desportivo'
+    }
+
+  },
+  methods:{
+    logout () {
+      this.$auth.logout('local')
     }
   }
 }
