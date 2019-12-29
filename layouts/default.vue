@@ -85,7 +85,7 @@ export default {
         {
           icon: 'mdi-account-multiple',
           title: 'Login',
-          to: '/login'
+          to: '/auth/login'
         },{
           icon: 'mdi-account-plus',
           title: 'Register',
