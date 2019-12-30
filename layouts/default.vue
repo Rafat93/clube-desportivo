@@ -161,8 +161,13 @@ export default {
         {
           icon: 'mdi-run',
           title: 'Atletas',
-          to: '/adminer/modalidades/list'
-        }
+          to: '/adminer/atletas/list'
+        },
+        {
+          icon: 'mdi-run',
+          title: 'Produtos',
+          to: '/adminer/atletas/list'
+        },
       ],
       items: [
         {

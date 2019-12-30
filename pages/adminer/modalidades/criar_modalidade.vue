@@ -83,7 +83,6 @@
 
         validate () {
           if (this.$refs.form.validate()) {
-            this.snackbar = true
             this.$axios.$post('/api/modalidades', {
               sigla: this.sigla,
               nome: this.nome,
