@@ -13,8 +13,11 @@
     >
       <template slot="items" slot-scope="props">
         <tr @click="props.expanded = !props.expanded">
-          <td class="text-xs">{{ props.item.nome }}</td>
-          <td class="text-xs">{{ props.item.email}}</td>
+          <td class="text-xs">{{ props.item.code }}</td>
+          <td class="text-xs">{{ props.item.tipo.nome}}</td>
+          <td class="text-xs">{{ props.item.descricao}}</td>
+          <td class="text-xs">{{ props.item.preco}}</td>
+          <td class="text-xs">{{ props.item.stock}}</td>
         </tr>
       </template>
     </v-data-table>
@@ -22,48 +25,52 @@
 </template>
 
 <script>
-    export default {
-      name: "list",
-      data () {
-        return {
-          headers: [
-            {
-              text: 'Code',
-              align: 'left',
-              sortable: false,
-              value: 'code'
-            },
-            {
-              text: 'Descrição',
-              align: 'left',
-              sortable: false,
-              value: 'descricao'
-            },
-            {
-              text: 'Preço (€)',
-              align: 'left',
-              sortable: false,
-              value: 'precoEmEuros',
-            },
-            {
-              text: 'Stock',
-              align: 'left',
-              sortable: false,
-              value: 'stock',
-            },
-
-          ],
-          produtos: []
-        }
-      },
-      created () {
-
-        this.$axios.$get('/api/produtos')
-          .then((produtos) => {
-            this.produtos = produtos;
-          });
+  export default {
+    data () {
+      return {
+        headers: [
+          {
+            text: 'Codigo',
+            align: 'left',
+            sortable: false,
+            value: 'code'
+          },
+          {
+            text: 'Tipo',
+            align: 'left',
+            sortable: false,
+            value: 'tipo.nome'
+          },
+          {
+            text: 'Descrição',
+            align: 'left',
+            sortable: false,
+            value: 'descricao'
+          },
+          {
+            text: 'Preço',
+            align: 'left',
+            sortable: false,
+            value: 'preco'
+          },
+          {
+            text: 'Stock',
+            align: 'left',
+            sortable: false,
+            value: 'stock'
+          }
+        ],
+        produtos: []
       }
+    },
+    created () {
+
+      this.$axios.$get('/api/produtos')
+        .then((produtos) => {
+          this.produtos = produtos;
+        });
     }
+  }
 </script>
 
 <style scoped>
