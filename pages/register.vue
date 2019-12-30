@@ -6,7 +6,7 @@
   >
     <p class="subtitle-1 text-center">Inscrição de Sócio/Atleta</p>
     <v-text-field
-      v-model="name"
+      v-model="nome"
       :counter="30"
       :rules="nameRules"
       label="Nome"
@@ -56,6 +56,15 @@
     ></v-text-field>
 
     <v-text-field
+      v-model="nic"
+      :rules="nicRules"
+      label="Nº Identificação Civil"
+      :counter="9"
+      type="number"
+      required
+    ></v-text-field>
+
+    <v-text-field
       v-model="morada"
       :rules="moradaRules"
       label="Morada"
@@ -79,6 +88,8 @@
       v-model="checkbox"
       :label="`Atleta `"
     ></v-checkbox>
+
+    {{selectedDate}}
 
     <!--<div v-if="this.checkbox === true">
 
@@ -114,7 +125,7 @@
 
 <script>
     export default {
-        name: "register",
+      name: "register",
       data: () => ({
         valid: true,
         checkbox: true,
@@ -131,8 +142,13 @@
           v => !!v || 'NIF é um campo obrigatório',
           v => (v && v.length ===  9) || 'NIF deve ter 9 algarismos. ',],
 
-        name: '',
-        nameRules: [
+        nic: '',
+        nicRules:[
+          v => !!v || 'Nº Identificação Civil é um campo obrigatório',
+          v => (v && v.length ===  9) || 'Nº Identificação Civil deve ter 9 algarismos. ',],
+
+        nome: '',
+        nomeRules: [
           v => !!v || 'Name é um campo obrigatório',
           v => (v && v.length <= 30) || 'Nome deve ter até 30 caracteres',
         ],
@@ -142,24 +158,39 @@
           v => !!v || 'E-mail is required',
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
+        code: 0,
 
       }),
       methods: {
-
         validate () {
           if (this.$refs.form.validate()) {
-            this.snackbar = true
+            this.code = this.code + 1;
+            this.$axios.$post('/api/inscricoes', {
+              nome: this.nome,
+              email: this.email,
+              code: this.code,
+              morada: this.morada,
+              numContribuinte: this.nif,
+              dataNascimento: this.selectedDate,
+              numIdentificacaoCivil: this.nic,
+
+            })
+              .then(() => {
+                this.$router.push('/')
+              })
+              .catch(error => {
+                console.log(error)
+              })
           }
+
         },
         reset () {
           this.$refs.form.reset()
         },
         resetValidation () {
           this.$refs.form.resetValidation()
-        },
-      },
-
-      middleware: ['auth']
+        }
+      }
     }
 </script>
 

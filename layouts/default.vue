@@ -168,6 +168,11 @@ export default {
           title: 'Produtos',
           to: '/adminer/produtos/list'
         },
+        {
+          icon: 'mdi-check-box-outline',
+          title: 'Inscrições',
+          to: '/adminer/inscricoes/list'
+        },
       ],
       items: [
         {
