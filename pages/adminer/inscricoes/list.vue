@@ -35,10 +35,14 @@
           {{'mdi-check-box-outline'}}
         </v-icon>
         <v-icon
-
           @click="deleteItem(item)"
         >
           {{'mdi-delete'}}
+        </v-icon>
+        <v-icon
+          @click="redirectInfo(item)"
+        >
+          {{'mdi-information-outline'}}
         </v-icon>
       </template>
     </v-data-table>
@@ -119,6 +123,9 @@
               this.inscricoes = inscricoes;
             });
         },
+        redirectInfo(item){
+          this.$router.push('/adminer/inscricoes/'+item.code+'/info');
+        },
         acceptItem (item) {
           this.$axios.$put('api/inscricoes/'+item.code+'/confirm').then( inscricoes => {
             this.getInscricoes(),
@@ -150,11 +157,7 @@
                   this.getInscricoes();
                 }
               );
-
-
-
           }
-
         },
       }
     }

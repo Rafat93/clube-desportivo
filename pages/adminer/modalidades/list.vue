@@ -20,11 +20,13 @@
       :items-per-page="10"
       class="elevation-1"
     >
-      <template slot="items" slot-scope="props">
-        <tr @click="props.expanded = !props.expanded">
-          <td class="text-xs">{{ props.item.nome }}</td>
-          <td class="text-xs">{{ props.item.email}}</td>
-        </tr>
+      <template v-slot:item.action="{ item }">
+
+        <v-icon
+          @click="redirectInfo(item)"
+        >
+          {{'mdi-information-outline'}}
+        </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -54,10 +56,16 @@
             sortable: false,
             value: 'epocaDesportiva'
           },
+          { text: 'Actions', value: 'action', sortable: false },
 
         ],
         modalidades: []
       }
+    },
+    methods:{
+      redirectInfo(item){
+        this.$router.push('/adminer/modalidades/'+item.sigla+'/info');
+      },
     },
     created () {
 

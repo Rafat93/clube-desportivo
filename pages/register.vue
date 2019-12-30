@@ -41,10 +41,11 @@
     </template>
     <v-date-picker
       v-model="selectedDate"
-
       no-title
       @input="showPicker = false"
+      :format="formatDate"
     ></v-date-picker>
+
     </v-menu>
 
     <v-text-field
@@ -83,6 +84,8 @@
         readonly
       ></v-text-field>
     </v-col>
+
+
 
 
     <v-checkbox
@@ -131,7 +134,7 @@
         valid: true,
         checkbox: true,
         showPicker: false,
-        selectedDate: null,
+        selectedDate: '',
 
         morada: '',
         moradaRules:[
@@ -163,6 +166,9 @@
 
       }),
       methods: {
+        formatDate (date) {
+          return moment(date).format('DD-MM-YYYY')
+        },
         validate () {
           if (this.$refs.form.validate()) {
             this.code = this.code + 1;
