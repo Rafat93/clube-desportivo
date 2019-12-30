@@ -39,7 +39,6 @@ export default {
     }
   },
   created () {
-
     this.$axios.$get('/api/atletas')
       .then((atletas) => {
         this.atletas = atletas
