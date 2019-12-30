@@ -164,7 +164,7 @@ export default {
           to: '/adminer/atletas/list'
         },
         {
-          icon: 'mdi-run',
+          icon: 'mdi-diamond-stone',
           title: 'Produtos',
           to: '/adminer/produtos/list'
         },
