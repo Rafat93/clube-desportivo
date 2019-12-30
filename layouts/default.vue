@@ -173,6 +173,11 @@ export default {
           title: 'Inscrições',
           to: '/adminer/inscricoes/list'
         },
+        {
+          icon: 'mdi-check-box-outline',
+          title: 'Sócios',
+          to: '/adminer/socios/list'
+        },
       ],
       items: [
         {

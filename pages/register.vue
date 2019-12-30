@@ -41,6 +41,7 @@
     </template>
     <v-date-picker
       v-model="selectedDate"
+
       no-title
       @input="showPicker = false"
     ></v-date-picker>
@@ -158,7 +159,7 @@
           v => !!v || 'E-mail is required',
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
-        code: 0,
+
 
       }),
       methods: {
@@ -168,7 +169,7 @@
             this.$axios.$post('/api/inscricoes', {
               nome: this.nome,
               email: this.email,
-              code: this.code,
+              code: "INSC_"+this.nif,
               morada: this.morada,
               numContribuinte: this.nif,
               dataNascimento: this.selectedDate,

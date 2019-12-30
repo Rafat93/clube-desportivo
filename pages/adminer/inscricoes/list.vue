@@ -87,15 +87,19 @@
             });
         },
         acceptItem (item) {
+          this.$axios.$put('api/inscricoes/'+item.code+'/confirm').then( inscricoes =>
+            this.getInscricoes(),
+            this.$toast.success('Aceite!')
+          );
 
 
         },
 
         deleteItem (item) {
 
-          let response = confirm('Are you sure you want to delete this item?')
+          let response = confirm('Are you sure you want to delete this item?');
           if(response == true){
-            this.$axios.$delete('/api/inscricoes/'+item.code)
+            this.$axios.$delete('/api/inscricoes/'+item.code);
 
             this.$toast.success('apagou');
             this.$toast.show(item.code );
