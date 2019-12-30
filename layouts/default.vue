@@ -166,7 +166,7 @@ export default {
         {
           icon: 'mdi-run',
           title: 'Produtos',
-          to: '/adminer/atletas/list'
+          to: '/adminer/produtos/list'
         },
       ],
       items: [
