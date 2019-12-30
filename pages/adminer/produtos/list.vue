@@ -12,6 +12,7 @@
           <td class="text-xs">{{ props.item.tipo.nome}}</td>
           <td class="text-xs">{{ props.item.descricao}}</td>
           <td class="text-xs">{{ props.item.preco}}</td>
+          <td class="text-xs">{{ props.item.stock}}</td>
         </tr>
       </template>
     </v-data-table>
@@ -46,6 +47,12 @@
             align: 'left',
             sortable: false,
             value: 'preco'
+          },
+          {
+            text: 'Stock',
+            align: 'left',
+            sortable: false,
+            value: 'stock'
           }
         ],
         produtos: []

@@ -86,10 +86,10 @@
             this.$axios.$post('/api/modalidades', {
               sigla: this.sigla,
               nome: this.nome,
-              epoca: this.epoca,
+              epocaDesportiva: this.epoca,
             })
               .then(() => {
-                this.$router.push('/modalidades')
+                this.$router.push('adminer/modalidades/list')
               })
               .catch(error => {
                 console.log(error)
