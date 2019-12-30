@@ -1,5 +1,25 @@
 <template>
   <div>
+    <v-snackbar
+      v-model="snackbar"
+      :bottom="y === 'bottom'"
+      :color="color"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      {{ text }}
+      <v-btn
+        dark
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-data-table
       :headers="headers"
       :items="inscricoes"
@@ -30,6 +50,13 @@
         name: "list",
       data () {
         return {
+          color: '',
+          mode: '',
+          snackbar: false,
+          text: '',
+          timeout: 4000,
+          x: null,
+          y: 'top',
           headers: [
             {
               text: 'Codigo',
@@ -42,6 +69,12 @@
               align: 'left',
               sortable: false,
               value: 'nome'
+            },
+            {
+              text: 'Email',
+              align: 'left',
+              sortable: false,
+              value: 'email'
             },
             {
               text: 'Data Nascimento',
@@ -87,10 +120,20 @@
             });
         },
         acceptItem (item) {
-          this.$axios.$put('api/inscricoes/'+item.code+'/confirm').then( inscricoes =>
+          this.$axios.$put('api/inscricoes/'+item.code+'/confirm').then( inscricoes => {
             this.getInscricoes(),
-            this.$toast.success('Aceite!')
-          );
+
+              // show snackbar
+            this.color = 'green',
+            this.text = 'Aceite com sucesso!',
+            this.snackbar = true
+            }
+          ).catch(error => {
+
+            this.color = 'red',
+              this.text = 'ERRO: Sócio com o email '+item.email+ ' já existe.',
+              this.snackbar = true
+          });
 
 
         },
@@ -99,11 +142,16 @@
 
           let response = confirm('Are you sure you want to delete this item?');
           if(response == true){
-            this.$axios.$delete('/api/inscricoes/'+item.code);
+              this.$axios.$delete('/api/inscricoes/'+item.code).then( inscricoes =>
+                {
+                  this.color = 'green';
+                  this.text = 'Inscrição com o código - '+item.code+' - eliminada com sucesso!';
+                  this.snackbar = true;
+                  this.getInscricoes();
+                }
+              );
 
-            this.$toast.success('apagou');
-            this.$toast.show(item.code );
-            this.getInscricoes();
+
 
           }
 

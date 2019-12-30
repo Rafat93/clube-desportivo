@@ -63,8 +63,11 @@
             this.$axios.$get('/api/socios')
               .then((socios) => {
                 this.socios = socios;
-              });
-          },
+              }).catch(error => {
+                this.$toast.show(error)
+                });
+            },
+
       }
     }
 </script>
