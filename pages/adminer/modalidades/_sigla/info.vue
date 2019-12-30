@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col>
-        <v-btn color="primary"  >Adicionar Escalão</v-btn>
+        <v-btn color="primary" @click="adicionarEscalao" >Adicionar Escalão</v-btn>
       </v-col>
       <v-col>
         <v-btn color="primary"  >Adicionar Treino</v-btn>
@@ -101,6 +101,61 @@
       </v-col>
 
     </v-row>
+    <v-row>
+      <v-col>
+        <v-card >
+          <v-card-title  class="justify-center">
+            Escalões
+          </v-card-title>
+          <v-card-text>
+            <v-divider></v-divider>
+            <div class="text--primary">
+              <div class="group-form">
+                <v-data-table
+                  :headers="headers_escaloes"
+                  :items="escaloes"
+                  :items-per-page="10"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <tr @click="props.expanded = !props.expanded">
+                      <td class="text-xs">{{ props.item.nome }}</td>
+                    </tr>
+                  </template>
+                </v-data-table>
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card>
+          <v-card-title class="justify-center">
+            Atletas
+          </v-card-title>
+          <v-card-text>
+            <v-divider></v-divider>
+            <div class="text--primary">
+              <div class="group-form">
+                <v-data-table
+                  :headers="headers_atletas"
+                  :items="atletas"
+                  :items-per-page="10"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <tr @click="props.expanded = !props.expanded">
+                      <td class="text-xs">{{ props.item.nome }}</td>
+                    </tr>
+                  </template>
+                </v-data-table>
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+    </v-row>
   </div>
 </template>
 
@@ -120,6 +175,26 @@
               value: 'nome'
             },
           ],
+          headers_escaloes:[
+            {
+              text: 'Nome',
+              align: 'left',
+              sortable: false,
+              value: 'nome'
+            },
+            {
+              text: 'Idade Min',
+              align: 'left',
+              sortable: false,
+              value: 'idadeMin'
+            },
+            {
+              text: 'Idade Max',
+              align: 'left',
+              sortable: false,
+              value: 'idadeMax'
+            },
+          ]
         }
       },
       methods:{
@@ -138,6 +213,9 @@
             this.escaloes = escaloes;
           });
         },
+        adicionarEscalao(){
+          this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_escalao');
+        }
 
       },
       created() {

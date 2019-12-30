@@ -171,7 +171,6 @@
         },
         validate () {
           if (this.$refs.form.validate()) {
-            this.code = this.code + 1;
             this.$axios.$post('/api/inscricoes', {
               nome: this.nome,
               email: this.email,
