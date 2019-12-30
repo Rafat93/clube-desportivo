@@ -1,7 +1,5 @@
 <template>
   <div>
-    {{this.$auth.user}}
-    {{this.$auth.loggedIn}}
     <v-data-table
       :headers="headers"
       :items="atletas"

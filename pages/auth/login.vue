@@ -3,6 +3,9 @@
     fluid
     fill-height
   >
+    <v-alert type="success" v-if="message == true">
+      I'm a success alert.
+    </v-alert>
     <v-layout
       align-center
       justify-center
@@ -56,6 +59,7 @@
 <script>
   export default {
     auth: false,
+    message: false,
     data() {
       return {
         email: null,
@@ -71,9 +75,11 @@
             }
         });
         promise.then(() => {
-          this.$toast.success('You are logged in!')
+          this.$toast.success('You are logged in!', {duration : 700});
           // check if the user $auth.user object is set
-          console.log(this.$auth.user)
+          console.log(this.$auth.user);
+          this.message = true;
+          this.$router.push('/')
           // TODO redirect based on the user role
           // eg:
           // if (this.$auth.user.groups.includes('Teacher')) {

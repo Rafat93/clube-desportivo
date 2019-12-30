@@ -1,34 +1,32 @@
 <template>
   <div>
-    <div>
-      <v-row>
-        <v-col>
-          <v-btn color="primary" to="/adminer/modalidades/criar_modalidade" >Criar Modalidade</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn color="primary">Primary</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn color="primary">Primary</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn color="primary">Primary</v-btn>
-        </v-col>
-      </v-row>
-      <v-data-table
-        :headers="headers"
-        :items="modalidades"
-        :items-per-page="10"
-        class="elevation-1"
-      >
-        <template slot="items" slot-scope="props">
-          <tr @click="props.expanded = !props.expanded">
-            <td class="text-xs">{{ props.item.nome }}</td>
-            <td class="text-xs">{{ props.item.email}}</td>
-          </tr>
-        </template>
-      </v-data-table>
-    </div>
+    <v-row>
+      <v-col>
+        <v-btn color="primary" to="/adminer/modalidades/criar_modalidade" >Criar Modalidade</v-btn>
+      </v-col>
+      <v-col>
+        <v-btn color="primary">Primary</v-btn>
+      </v-col>
+      <v-col>
+        <v-btn color="primary">Primary</v-btn>
+      </v-col>
+      <v-col>
+        <v-btn color="primary">Primary</v-btn>
+      </v-col>
+    </v-row>
+    <v-data-table
+      :headers="headers"
+      :items="modalidades"
+      :items-per-page="10"
+      class="elevation-1"
+    >
+      <template slot="items" slot-scope="props">
+        <tr @click="props.expanded = !props.expanded">
+          <td class="text-xs">{{ props.item.nome }}</td>
+          <td class="text-xs">{{ props.item.email}}</td>
+        </tr>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
