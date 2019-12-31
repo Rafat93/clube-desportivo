@@ -8,7 +8,7 @@
         <v-btn color="primary"  >Adicionar Treino</v-btn>
       </v-col>
       <v-col>
-        <v-btn color="primary"  >Adicionar </v-btn>
+        <v-btn color="primary" @click="adicionarGraduacao" >Adicionar Graduação </v-btn>
       </v-col>
       <v-col>
         <v-btn color="primary"  >Adicionar Treinador</v-btn>
@@ -91,6 +91,7 @@
                 <template slot="items" slot-scope="props">
                   <tr @click="props.expanded = !props.expanded">
                     <td class="text-xs">{{ props.item.nome }}</td>
+                    <td class="text-xs">{{ props.item.numeroSocio }}</td>
                   </tr>
                 </template>
                 </v-data-table>
@@ -131,7 +132,7 @@
       <v-col>
         <v-card>
           <v-card-title class="justify-center">
-            Atletas
+            Graduações
           </v-card-title>
           <v-card-text>
             <v-divider></v-divider>
@@ -174,6 +175,12 @@
               sortable: false,
               value: 'nome'
             },
+            {
+              text: 'Nº Sócio',
+              align: 'left',
+              sortable: false,
+              value: 'numeroSocio'
+            },
           ],
           headers_escaloes:[
             {
@@ -209,12 +216,15 @@
           });
         },
         getEscaloes(){
-          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/escaloes').then((escaloes) => {
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/escaloes/').then((escaloes) => {
             this.escaloes = escaloes;
           });
         },
         adicionarEscalao(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_escalao');
+        },
+        adicionarGraduacao(){
+          this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_graduacao');
         }
 
       },

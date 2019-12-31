@@ -23,7 +23,7 @@
               <v-list-item-title v-text="item.title" />
             </v-list-item-content>
           </v-list-item>
-          <v-list-item @click.prevent="logout">
+          <v-list-item @click.prevent="logout" >
             <v-list-item-action>
               <v-icon>{{this.itemLogout}}</v-icon>
             </v-list-item-action>
@@ -174,9 +174,14 @@ export default {
           to: '/adminer/inscricoes/list'
         },
         {
-          icon: 'mdi-check-box-outline',
+          icon: 'mdi-account-group',
           title: 'Sócios',
           to: '/adminer/socios/list'
+        },
+        {
+          icon: 'mdi-account-star',
+          title: 'Treinadores',
+          to: '/adminer/treinadores/list'
         },
       ],
       items: [

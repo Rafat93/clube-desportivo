@@ -4,12 +4,12 @@
     v-model="valid"
     lazy-validation
   >
-    <p class="subtitle-1 text-center">Criação de Nova Modalidade</p>
+    <p class="subtitle-1 text-center">Criação de Graduação</p>
     <v-text-field
-      v-model="sigla"
-      :counter="5"
-      :rules="siglaRules"
-      label="Sigla"
+      v-model="code"
+      :counter="10"
+      :rules="codeRules"
+      label="Código"
       required
     ></v-text-field>
     <v-text-field
@@ -19,14 +19,6 @@
       label="Nome"
       required
     ></v-text-field>
-    <v-text-field
-      v-model="epoca"
-      :counter="9"
-      :rules="epocaRules"
-      label="Época"
-      hint="20XX/20XX"
-      required
-    ></v-text-field>
 
     <v-btn
       :disabled="!valid"
@@ -34,7 +26,7 @@
       class="mr-4"
       @click="validate"
     >
-      Validate
+      Adicionar
     </v-btn>
 
     <v-btn
@@ -42,21 +34,65 @@
       class="mr-4"
       @click="reset"
     >
-      Reset Form
+      Reset Formulário
     </v-btn>
 
     <v-btn
       color="warning"
       @click="resetValidation"
     >
-      Reset Validation
+      Reset Validação
     </v-btn>
   </v-form>
 </template>
 
 <script>
     export default {
-        name: "criar_graduacao"
+        name: "criar_graduacao",
+      data: () => ({
+        code: '',
+        codeRules:[
+          v => !!v || 'Código é um campo obrigatório',
+          v => (v && v.length <= 10) || 'Código deve ter até 10 caracteres',
+        ],
+
+        nome: '',
+        nomeRules:[
+          v => !!v || 'Nome é um campo obrigatório',
+          v => (v && v.length <= 20) || 'Nome deve ter até 20 caracteres',
+        ],
+
+      }),
+      methods: {
+        validate () {
+          if (this.$refs.form.validate()) {
+
+            this.$axios.$post('/api/inscricoes', {
+              nome: this.nome,
+              email: this.email,
+              code: "INSC_"+this.nif,
+              morada: this.morada,
+              numContribuinte: this.nif,
+              dataNascimento: this.selectedDate,
+              numIdentificacaoCivil: this.nic,
+
+            })
+              .then(() => {
+                this.$router.push('/')
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
+
+        },
+        reset () {
+          this.$refs.form.reset()
+        },
+        resetValidation () {
+          this.$refs.form.resetValidation()
+        }
+      }
     }
 </script>
 

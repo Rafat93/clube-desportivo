@@ -23,6 +23,7 @@
       v-model="idadeMin"
       :counter="2"
       :rules="idadeMinRules"
+      type="number"
       label="Idade Minima"
       required
     ></v-text-field>
@@ -32,6 +33,7 @@
       :rules="idadeMaxRules"
       label="Idade Máxima"
       required
+      type="number"
     ></v-text-field>
 
     <v-btn
@@ -64,6 +66,7 @@
     export default {
         name: "criar_escalao",
       data: () => ({
+        valid: true,
         code: '',
         codeRules:[
           v => !!v || 'Código é um campo obrigatório',
@@ -79,34 +82,41 @@
         idadeMin:'',
         idadeMinRules:[
           v => !!v || 'Idade Mínima é um campo obrigatório',
-          v => (v && v.length === 2) || 'Idade Mínima deve ter 2 caracteres',
+          v => (v && v.length <= 2) || 'Idade Mínima deve ter no máximo 2 caracteres',
         ],
 
         idadeMax:'',
         idadeMaxRules:[
           v => !!v || 'Idade Máxima é um campo obrigatório',
-          v => (v && v.length === 2) || 'Idade Máxima deve ter 2 caracteres',
+          v => (v && v.length <= 2) || 'Idade Máxima deve ter no máximo 2 caracteres',
         ],
 
-        stock:'',
-        stockRules:[],
+
       }),
       methods: {
         validate () {
           if (this.$refs.form.validate()) {
 
-            this.$axios.$post('/api/inscricoes', {
+            this.$axios.$post('/api/escaloes/', {
+              code: this.code,
               nome: this.nome,
-              email: this.email,
-              code: "INSC_"+this.nif,
-              morada: this.morada,
-              numContribuinte: this.nif,
-              dataNascimento: this.selectedDate,
-              numIdentificacaoCivil: this.nic,
+              idadeMin: this.idadeMin,
+              idadeMax: this.idadeMax,
+              siglaModalidade: this.$route.params.sigla,
 
             })
               .then(() => {
-                this.$router.push('/')
+
+                this.$axios.$put('/api/escaloes/'+this.code+'/modalidade/enroll/'+this.$route.params.sigla,{
+                  code: this.code,
+                  sigla: this.$route.params.sigla,
+                }).then(()=> {
+                  this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info');
+
+                }).catch(error => {
+                  console.log(error)
+                })
+
               })
               .catch(error => {
                 console.log(error)
