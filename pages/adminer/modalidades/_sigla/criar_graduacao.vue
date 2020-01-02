@@ -67,18 +67,14 @@
         validate () {
           if (this.$refs.form.validate()) {
 
-            this.$axios.$post('/api/inscricoes', {
+            this.$axios.$post('/api/graduacoes/', {
+              code: this.code,
               nome: this.nome,
-              email: this.email,
-              code: "INSC_"+this.nif,
-              morada: this.morada,
-              numContribuinte: this.nif,
-              dataNascimento: this.selectedDate,
-              numIdentificacaoCivil: this.nic,
+              siglaModalidade: this.$route.params.sigla
 
             })
               .then(() => {
-                this.$router.push('/')
+                this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info')
               })
               .catch(error => {
                 console.log(error)
