@@ -1,40 +1,17 @@
 <template>
   <div>
     <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title class="justify-center">
+            {{modalidade.nome}}
+          </v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
       <!--COLUNA COM AS TABELAS-->
       <v-col >
-        <v-row>
-          <v-col>
-            <v-card>
-              <v-card-title style="background-color: lightsalmon" class="justify-center">
-                Nº de Atletas
-              </v-card-title>
-              <v-card-text style="margin-top: 20px">
-                {{atletas.length}}
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col>
-            <v-card>
-              <v-card-title style="background-color: lightsalmon; " class="justify-center">
-                Nº de Socios
-              </v-card-title>
-              <v-card-text style="margin-top: 20px">
-                {{atletas.length}}
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col>
-            <v-card>
-              <v-card-title style="background-color: lightsalmon" class="justify-center">
-                Nº de Treinadores
-              </v-card-title>
-              <v-card-text style="margin-top: 20px">
-                {{treinadores.length}}
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
         <v-row>
           <v-col>
             <v-card>
@@ -148,19 +125,33 @@
       </v-col>
       <!--COLUNA COM A INFO-->
       <v-col cols="2">
-        <v-card>
-          <v-card-title >
-            Ações
-          </v-card-title>
-          <v-divider></v-divider>
-          <v-card-text>
-            <v-btn small color="primary" @click="adicionarEscalao" width="150px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
-            <v-btn small color="primary" width="150px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
-            <v-btn small color="primary" @click="adicionarGraduacao" width="150px;"  style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
-            <v-btn small color="primary" @click="adicionarTreinador" width="150px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treinador</v-btn>
-          </v-card-text>
-
-        </v-card>
+        <v-row>
+          <v-card style="margin-top: 12px;" align="center" width="183px">
+            <v-card-title class="justify-center">
+              Ações
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text class="justify-center">
+              <v-btn small color="primary" @click="adicionarEscalao" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
+              <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
+              <v-btn small color="primary" @click="adicionarGraduacao" width="130px;"  style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
+              <v-btn small color="primary" @click="adicionarTreinador" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treinador</v-btn>
+              <v-btn small color="warning" @click="" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon>Editar</v-btn>
+            </v-card-text>
+          </v-card>
+        </v-row>
+        <v-row>
+          <v-card style="margin-top: 5px;" align="center" width="183px">
+            <v-card-title class="justify-center">
+              Informações
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <p class="font-weight-medium">Nº Atletas: {{atletas.length}}</p>
+              <p class="font-weight-medium">Nº Treinadores: {{treinadores.length}}</p>
+            </v-card-text>
+          </v-card>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -174,6 +165,7 @@
       data () {
         return {
 
+          modalidade: '',
           atletas: [],
           treinadores:[],
           escaloes:[],
@@ -224,6 +216,11 @@
         }
       },
       methods:{
+        getModalidade(){
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla).then((modalidade) => {
+            this.modalidade = modalidade;
+          });
+        },
         getAtletas(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/atletas').then((atletas) => {
             this.atletas = atletas;
@@ -257,6 +254,7 @@
 
       },
       created() {
+          this.getModalidade();
           this.getAtletas();
           this.getTreinadores();
           this.getEscaloes();
