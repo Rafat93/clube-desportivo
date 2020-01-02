@@ -5,6 +5,17 @@
         <v-card>
           <v-card-title class="justify-center">
             {{modalidade.nome}}
+            <!--Treinadores da Modalidade:
+            {{treinadores}}
+
+            <br>
+            Treinadores (TODOS):
+            {{all_treinadores}}
+
+            <br>
+            Treinadores Externos:
+            {{treinadoresExternos}}-->
+
           </v-card-title>
         </v-card>
       </v-col>
@@ -23,7 +34,7 @@
                 <div class="text--primary">
                   <div class="group-form">
                     <v-data-table
-                      :headers="headers_atletas"
+                      :headers="headers_treinadores"
                       :items="treinadores"
                       :items-per-page="10"
                       class="elevation-1"
@@ -135,7 +146,43 @@
               <v-btn small color="primary" @click="adicionarEscalao" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
               <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
               <v-btn small color="primary" @click="adicionarGraduacao" width="130px;"  style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
-              <v-btn small color="primary" @click="adicionarTreinador" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treinador</v-btn>
+
+              <v-dialog v-model="dialog" width="500">
+                <v-card>
+                  <v-card-title class="headline grey lighten-2" primary-title>
+                    Adicionar Treinador a {{modalidade.nome}}
+                  </v-card-title>
+
+                  <v-card-text>
+                    Por favor, selecione um treinador para adicionar à modalidade de {{modalidade.nome}}.
+
+                    <v-select
+                      v-model="treinadorSelecionado"
+                      :items="all_treinadores"
+                      label="Selecione"
+                      item-text="nome"
+                      item-value="email"
+                      chips
+                      hint="Selecione um treinador."
+                      persistent-hint
+                    ></v-select>
+                  </v-card-text>
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="adicionarTreinador">
+                      Aceitar
+                    </v-btn>
+                    <v-btn color="error" text @click="dialog = false">
+                      Cancelar
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              <template v-slot:activator="{ on }">
+               <v-btn small color="primary" v-on="on" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treinador</v-btn>
+              </template>
+            </v-dialog>
               <v-btn small color="warning" @click="" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon>Editar</v-btn>
             </v-card-text>
           </v-card>
@@ -155,6 +202,8 @@
       </v-col>
     </v-row>
 
+    <!--POPUP PARA ADICIONAR UM TREINADOR A ESTA MODALIDADE-->
+
   </div>
 
 </template>
@@ -165,9 +214,13 @@
       data () {
         return {
 
+          dialog: false,
+          treinadorSelecionado: '',
           modalidade: '',
           atletas: [],
           treinadores:[],
+          treinadoresExternos:[],
+          all_treinadores:[],
           escaloes:[],
           graduacoes:[],
           headers_atletas:[
@@ -212,6 +265,21 @@
               value: 'nome'
             },
           ],
+          headers_treinadores:[
+            {
+              text: 'Nome',
+              align: 'left',
+              sortable: false,
+              value: 'nome'
+            },
+            {
+              text: 'Nº Cédula',
+              align: 'left',
+              sortable: false,
+              value: 'numeroCedula'
+            },
+          ],
+
 
         }
       },
@@ -224,6 +292,11 @@
         getAtletas(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/atletas').then((atletas) => {
             this.atletas = atletas;
+          });
+        },
+        getAllTreinadores(){
+          this.$axios.$get('/api/treinadores/').then((treinadores) => {
+            this.all_treinadores = treinadores;
           });
         },
         getTreinadores(){
@@ -248,16 +321,37 @@
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_graduacao');
         },
         adicionarTreinador(){
-          this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/adicionar_treinador');
+          this.$axios.$put('/api/treinadores/'+this.treinadorSelecionado+'/modalidade/enroll/'+this.$route.params.sigla,{
+            email: this.treinadorSelecionado,
+            sigla: this.$route.params.sigla,
+          }).
+          then(()=>{
+              this.getTreinadores();
+              this.dialog = false;
+          }
+          ).catch(error => {
+            console.log(error);
+          });
+        },
+        treinadoresFilter(){
+          for (var i = 0; i <= this.all_treinadores.length; i++){
+            for (var j = 0; j <= this.treinadores.length; j++){
+              console.log("entrou");
+              console.log(this.all_treinadores[i])
+            }
+          }
         }
 
 
       },
       created() {
+
           this.getModalidade();
           this.getAtletas();
           this.getTreinadores();
           this.getEscaloes();
+          this.getAllTreinadores();
+          this.treinadoresFilter();
       }
     }
 </script>

@@ -6,8 +6,7 @@
       :items-per-page="10"
       class="elevation-1"
     >
-      <template v-slot:item.action="{ item }">
-
+      <template v-slot:item.action="{ item }" >
         <v-icon
           @click="redirectInfo(item)"
         >
@@ -15,6 +14,7 @@
         </v-icon>
       </template>
     </v-data-table>
+
   </div>
 
 </template>
@@ -24,6 +24,7 @@
         name: "list",
       data () {
         return {
+          dialog: false,
           headers: [
             {
               text: 'Nome',
@@ -34,13 +35,14 @@
             { text: 'Actions', value: 'action', sortable: false },
 
           ],
-          treinadores: []
+          treinadores: [],
         }
       },
       methods:{
         redirectInfo(item){
-          this.$router.push('/adminer/treinadores/'+item.sigla+'/info');
+          this.$router.push('/adminer/treinadores/'+item.email+'/info');
         },
+
       },
       created () {
 

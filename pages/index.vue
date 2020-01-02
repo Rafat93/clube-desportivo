@@ -7,60 +7,9 @@
     <div class="headline" align="center" style="color: dimgrey; margin-top: 20px; margin-bottom: 20px;">
       Desafia-te!
     </div>
-  <!--  <v-row style="margin-top: 20px">
-      <v-col>
-        <v-card>
-          <v-card-title class="justify-center">
-            Natação
-          </v-card-title>
-          <v-card-text>
-            <v-divider></v-divider>
-            <div class="text&#45;&#45;primary">
-              <div class="group-form">
 
-                1. Reduz o risco de episódios cardiovasculares
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col>
-        <v-card>
-          <v-card-title class="justify-center">
-            Natação
-          </v-card-title>
-          <v-card-text>
-            <v-divider></v-divider>
-            <div class="text&#45;&#45;primary">
-              <div class="group-form">
-                <div class="input">Nome:</div>
-                olá
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col>
-        <v-card>
-          <v-card-title class="justify-center">
-            Natação
-          </v-card-title>
-          <v-card-text>
-            <v-divider></v-divider>
-            <div class="text&#45;&#45;primary">
-              <div class="group-form">
-                <div class="input">Nome:</div>
-                olá
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>-->
     <v-carousel
-    cycle=true
+    cycle
     style="height: 400px">
       <v-carousel-item
         v-for="(item,i) in items"

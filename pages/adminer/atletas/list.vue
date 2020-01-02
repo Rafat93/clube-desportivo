@@ -6,12 +6,7 @@
       :items-per-page="10"
       class="elevation-1"
     >
-      <template slot="items" slot-scope="props">
-        <tr @click="props.expanded = !props.expanded">
-          <td class="text-xs">{{ props.item.nome }}</td>
-          <td class="text-xs">{{ props.item.email}}</td>
-        </tr>
-      </template>
+
     </v-data-table>
   </div>
 

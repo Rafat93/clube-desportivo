@@ -11,15 +11,6 @@
       :items-per-page="10"
       class="elevation-1"
     >
-      <template slot="items" slot-scope="props">
-        <tr @click="props.expanded = !props.expanded">
-          <td class="text-xs">{{ props.item.code }}</td>
-          <td class="text-xs">{{ props.item.tipo.nome}}</td>
-          <td class="text-xs">{{ props.item.descricao}}</td>
-          <td class="text-xs">{{ props.item.preco}}</td>
-          <td class="text-xs">{{ props.item.stock}}</td>
-        </tr>
-      </template>
     </v-data-table>
   </div>
 </template>

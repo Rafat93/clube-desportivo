@@ -12,11 +12,7 @@
       :vertical="mode === 'vertical'"
     >
       {{ text }}
-      <v-btn
-        dark
-        text
-        @click="snackbar = false"
-      >
+      <v-btn dark text @click="snackbar = false">
         Close
       </v-btn>
     </v-snackbar>
