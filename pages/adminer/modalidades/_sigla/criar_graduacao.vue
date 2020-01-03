@@ -56,14 +56,19 @@
               code: this.code,
               nome: this.nome,
               siglaModalidade: this.$route.params.sigla
-
             })
               .then(() => {
-                this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info')
-              })
-              .catch(error => {
-                console.log(error)
-              })
+                this.$axios.$put('/api/graduacoes/'+this.code+'/modalidade/enroll/'+this.$route.params.sigla, {
+                  code: this.code,
+                  sigla: this.$route.params.sigla,
+                }).then(() =>{
+                  this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info');
+                }).catch(error => {
+                  console.log(error)
+                })
+              }).catch(error => {
+              console.log(error)
+            })
           }
 
         },

@@ -118,7 +118,6 @@
                   sigla: this.$route.params.sigla,
                 }).then(()=> {
                   this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info');
-
                 }).catch(error => {
                   console.log(error)
                 })

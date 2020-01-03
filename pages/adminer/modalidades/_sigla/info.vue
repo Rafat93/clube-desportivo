@@ -158,48 +158,8 @@
               <v-btn small color="primary" @click="adicionarEscalao" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
               <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" :disabled="treinadores.length == 0 || graduacoes.length == 0 || escaloes.length == 0" @click="adicionarTreino" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
 
-              <!--POPUP PARA ADICIONAR UMA GRADUACAO A ESTA MODALIDADE-->
-              <v-dialog v-model="dialog_graduacao" width="500">
-                <v-card>
-                  <v-card-title class="headline grey lighten-2" primary-title>
-                    Adicionar Graduação a {{modalidade.nome}}
-                  </v-card-title>
-                  <v-card-text>
-                    <v-form ref="form" v-model="valid" >
-                      <p class="subtitle-1 text-center">Criação de Graduação</p>
-                      <v-text-field
-                        v-model="code"
-                        :counter="10"
-                        :rules="codeRules"
-                        label="Código"
-                        required
-                      ></v-text-field>
-                      <v-text-field
-                        v-model="nome"
-                        :counter="20"
-                        :rules="nomeRules"
-                        label="Nome"
-                        required
-                      ></v-text-field>
-                    </v-form>
-                  </v-card-text>
-                  <v-divider></v-divider>
 
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" :disabled="!valid" text @click="adicionarGraduacao">
-                      Aceitar
-                    </v-btn>
-                    <v-btn color="error" text @click="cancelGraduacao">
-                      Cancelar
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-                <template v-slot:activator="{ on }">
-                  <v-btn small color="primary"width="130px;" v-on="on" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
-                </template>
-              </v-dialog>
-
+              <v-btn small color="primary"width="130px;" @click="adicionarGraduacao"  style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
 
               <!--POPUP PARA ADICIONAR UM TREINADOR A ESTA MODALIDADE-->
               <v-dialog v-model="dialog_treinador" width="500">
@@ -398,13 +358,11 @@
         },
         getEscaloes(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/escaloes/').then((escaloes) => {
-            console.log("escaloes: "+escaloes);
             this.escaloes = escaloes;
           });
         },
         getGraduacoes(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/graduacoes/').then((graduacoes) => {
-            console.log("Graduacoes"+graduacoes);
             this.graduacoes = graduacoes;
           });
         },
@@ -412,7 +370,8 @@
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_escalao');
         },
         adicionarGraduacao(){
-          if (this.$refs.form.validate()) {
+          this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_graduacao');
+          /*if (this.$refs.form.validate()) {
 
             this.$axios.$post('/api/graduacoes/', {
               code: this.code,
@@ -432,7 +391,7 @@
               }).catch(error => {
                 console.log(error)
               })
-          }
+          }*/
         },
         adicionarTreino(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_treino');
