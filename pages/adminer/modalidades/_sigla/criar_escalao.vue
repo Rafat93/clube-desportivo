@@ -113,7 +113,6 @@
 
             })
               .then(() => {
-
                 this.$axios.$put('/api/escaloes/'+this.code+'/modalidade/enroll/'+this.$route.params.sigla,{
                   code: this.code,
                   sigla: this.$route.params.sigla,
@@ -123,9 +122,7 @@
                 }).catch(error => {
                   console.log(error)
                 })
-
-              })
-              .catch(error => {
+              }).catch(error => {
                 console.log(error)
               })
           }

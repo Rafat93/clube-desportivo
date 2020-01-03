@@ -396,11 +396,13 @@
         },
         getEscaloes(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/escaloes/').then((escaloes) => {
+            console.log("escaloes: "+escaloes);
             this.escaloes = escaloes;
           });
         },
         getGraduacoes(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/graduacoes/').then((graduacoes) => {
+            console.log("Graduacoes"+graduacoes);
             this.graduacoes = graduacoes;
           });
         },
@@ -417,10 +419,16 @@
 
             })
               .then(() => {
-               this.dialog_graduacao = false;
-               this.getGraduacoes;
-              })
-              .catch(error => {
+                this.$axios.$put('/api/graduacoes/'+this.code+'/modalidade/enroll/'+this.$route.params.sigla, {
+                  code: this.code,
+                  sigla: this.$route.params.sigla,
+                }).then(() =>{
+                  this.dialog_graduacao = false;
+                  this.getGraduacoes();
+                }).catch(error => {
+                  console.log(error)
+                })
+              }).catch(error => {
                 console.log(error)
               })
           }

@@ -33,6 +33,10 @@
         >
           {{'mdi-delete'}}
         </v-icon>
+        <v-icon
+          @click="editItem(item)"
+        >{{'mdi-pencil'}}
+        </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -60,7 +64,7 @@
             text: 'Tipo',
             align: 'left',
             sortable: false,
-            value: 'tipo.nome'
+            value: 'tipo'
           },
           {
             text: 'Descrição',
@@ -110,6 +114,9 @@
           );
         }
       },
+      editItem(item) {
+        this.$router.push('/adminer/produtos/'+item.code+'/editar_produto');
+      }
     }
   }
 </script>

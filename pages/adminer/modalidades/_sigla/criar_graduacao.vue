@@ -34,6 +34,7 @@
     export default {
         name: "criar_graduacao",
       data: () => ({
+        valid: true,
         code: '',
         codeRules:[
           v => !!v || 'Código é um campo obrigatório',

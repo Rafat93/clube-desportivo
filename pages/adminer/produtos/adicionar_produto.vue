@@ -51,7 +51,7 @@
       class="mr-4"
       @click="validate"
     >
-      Adicionar
+      Confirmar
     </v-btn>
 
     <v-btn
@@ -59,14 +59,22 @@
       class="mr-4"
       @click="reset"
     >
-      Reset Form
+      Reset Formulário
     </v-btn>
 
     <v-btn
       color="warning"
+      class="mr-4"
       @click="resetValidation"
     >
       Reset Validação
+    </v-btn>
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="cancel"
+    >
+      Cancelar
     </v-btn>
   </v-form>
 </template>
@@ -92,12 +100,12 @@
         descricao: '',
         descricaoRules:[],
 
-        preco:0,
+        preco:'',
         precoRules:[
           v => !!v || 'Preço é um campo obrigatório',
         ],
 
-        stock:0,
+        stock:'',
         stockRules:[
           v => !!v || 'Stock é um campo obrigatório',
         ],
@@ -135,6 +143,10 @@
         },
         resetValidation () {
           this.$refs.form.resetValidation()
+        },
+        cancel(){
+          this.$router.push('/adminer/produtos/list')
+
         }
       }
     }

@@ -68,14 +68,11 @@
       },
     },
     created () {
-
       this.$axios.$get('/api/modalidades')
         .then((modalidades) => {
           this.modalidades = modalidades;
           console.log(modalidades);
         });
-
-
     }
   }
 </script>
