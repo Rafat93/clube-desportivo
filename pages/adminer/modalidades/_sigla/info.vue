@@ -237,7 +237,7 @@
             </v-dialog>
 
 
-              <v-btn small color="warning" @click="" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon>Editar</v-btn>
+              <v-btn small color="warning" @click="editarModalidade" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon>Editar</v-btn>
               <v-btn small color="error" @click="deleteModalidade" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-delete'}}</v-icon>Remover</v-btn>
 
 
@@ -439,6 +439,9 @@
           ).catch(error => {
             console.log(error);
           });
+        },
+        editarModalidade(){
+          this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/editar_modalidade');
         },
         treinadoresFilter(){
           for (var i = 0; i <= this.all_treinadores.length; i++){
