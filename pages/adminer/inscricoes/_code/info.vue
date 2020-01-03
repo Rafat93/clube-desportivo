@@ -63,7 +63,8 @@
               .then((inscricao) => {
                 this.inscricao = inscricao;
               });
-          }
+          },
+
       },
       created() {
           this.getInscricao();
@@ -78,7 +79,7 @@
   .group-form{
     margin-top: 8px;
     margin-bottom: 13px;
-    margin-left: 200px;
+    margin-left: 100px;
     font-size: 16px;
   }
   .input{

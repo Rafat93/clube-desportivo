@@ -1,10 +1,26 @@
 <template>
   <div>
+    <v-row>
+      <v-col cols="4">
+        <div>
+          <v-text-field
+          v-model="search"
+          label="Search"
+          single-line
+          hide-details
+          :prepend-inner-icon=" mdiMagnify "
+        ></v-text-field>
+        </div>
+
+      </v-col>
+    </v-row>
+
     <v-data-table
       :headers="headers"
       :items="treinadores"
       :items-per-page="10"
       class="elevation-1"
+      :search="search"
     >
       <template v-slot:item.action="{ item }" >
         <v-icon
@@ -20,17 +36,32 @@
 </template>
 
 <script>
+  import { mdiMagnify } from '@mdi/js';
     export default {
         name: "list",
       data () {
         return {
+          icon: mdiMagnify,
           dialog: false,
+          search: '',
           headers: [
             {
               text: 'Nome',
               align: 'left',
               sortable: false,
               value: 'nome'
+            },
+            {
+              text: 'Nº Cédula',
+              align: 'left',
+              sortable: false,
+              value: 'numeroCedula'
+            },
+            {
+              text: 'Email',
+              align: 'left',
+              sortable: false,
+              value: 'email'
             },
             { text: 'Actions', value: 'action', sortable: false },
 

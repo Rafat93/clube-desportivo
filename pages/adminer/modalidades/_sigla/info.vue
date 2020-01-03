@@ -5,17 +5,6 @@
         <v-card>
           <v-card-title class="justify-center">
             {{modalidade.nome}}
-            <!--Treinadores da Modalidade:
-            {{treinadores}}
-
-            <br>
-            Treinadores (TODOS):
-            {{all_treinadores}}
-
-            <br>
-            Treinadores Externos:
-            {{treinadoresExternos}}-->
-
           </v-card-title>
         </v-card>
       </v-col>
@@ -147,6 +136,7 @@
               <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
               <v-btn small color="primary" @click="adicionarGraduacao" width="130px;"  style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
 
+              <!--POPUP PARA ADICIONAR UM TREINADOR A ESTA MODALIDADE-->
               <v-dialog v-model="dialog" width="500">
                 <v-card>
                   <v-card-title class="headline grey lighten-2" primary-title>
@@ -202,7 +192,7 @@
       </v-col>
     </v-row>
 
-    <!--POPUP PARA ADICIONAR UM TREINADOR A ESTA MODALIDADE-->
+
 
   </div>
 
@@ -295,7 +285,7 @@
           });
         },
         getAllTreinadores(){
-          this.$axios.$get('/api/treinadores/').then((treinadores) => {
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/treinadores_livres').then((treinadores) => {
             this.all_treinadores = treinadores;
           });
         },
@@ -328,6 +318,8 @@
           then(()=>{
               this.getTreinadores();
               this.dialog = false;
+              this.treinadorSelecionado = '';
+              this.getAllTreinadores();
           }
           ).catch(error => {
             console.log(error);
