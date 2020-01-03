@@ -153,7 +153,7 @@
             <v-divider></v-divider>
             <v-card-text class="justify-center">
               <v-btn small color="primary" @click="adicionarEscalao" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
-              <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
+              <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" @click="adicionarTreino" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
 
               <!--POPUP PARA ADICIONAR UMA GRADUACAO A ESTA MODALIDADE-->
               <v-dialog v-model="dialog_graduacao" width="500">
@@ -424,6 +424,9 @@
                 console.log(error)
               })
           }
+        },
+        adicionarTreino(){
+          this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_treino');
         },
         adicionarTreinador(){
           this.$axios.$put('/api/treinadores/'+this.treinadorSelecionado+'/modalidade/enroll/'+this.$route.params.sigla,{
