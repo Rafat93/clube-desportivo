@@ -143,6 +143,37 @@
             </v-card>
           </v-col>
         </v-row>
+
+
+        <v-row>
+          <v-col>
+            <v-card>
+              <v-card-title class="justify-center">
+                Treinos
+              </v-card-title>
+              <v-card-text>
+                <v-divider></v-divider>
+                <div class="text--primary">
+                  <div class="group-form">
+                    <v-data-table
+                      :headers="headers_treinos"
+                      :items="treinos"
+                      :items-per-page="10"
+                      class="elevation-1"
+                    >
+                      <template v-slot:item.action="{ item }" >
+                        <v-icon @click="">
+                          {{'mdi-delete'}}
+                        </v-icon>
+                      </template>
+                    </v-data-table>
+                  </div>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-col>
+
+        </v-row>
       </v-col>
 
 
@@ -273,6 +304,15 @@
             },
             { text: 'Ações', value: 'action', sortable: false },
           ],
+          treinos: [],
+          headers_treinos:[
+            {
+              text: 'horaInicio',
+              align: 'left',
+              sortable: false,
+              value: 'horaInicio'
+            }
+          ],
           headers_escaloes:[
             {
               text: 'Nome',
@@ -363,32 +403,17 @@
             this.graduacoes = graduacoes;
           });
         },
+        getTreinos(){
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/treinos/').then((treinos) => {
+            this.treinos = treinos;
+          });
+        },
         adicionarEscalao(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_escalao');
         },
         adicionarGraduacao(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_graduacao');
-          /*if (this.$refs.form.validate()) {
 
-            this.$axios.$post('/api/graduacoes/', {
-              code: this.code,
-              nome: this.nome,
-              siglaModalidade: this.$route.params.sigla
-            })
-              .then(() => {
-                this.$axios.$put('/api/graduacoes/'+this.code+'/modalidade/enroll/'+this.$route.params.sigla, {
-                  code: this.code,
-                  sigla: this.$route.params.sigla,
-                }).then(() =>{
-                  this.dialog_graduacao = false;
-                  this.getGraduacoes();
-                }).catch(error => {
-                  console.log(error)
-                })
-              }).catch(error => {
-                console.log(error)
-              })
-          }*/
         },
         adicionarTreino(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_treino');
@@ -410,13 +435,6 @@
         },
         editarModalidade(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/editar_modalidade');
-        },
-        cancelGraduacao(){
-          this.dialog_graduacao= false;
-          this.code = '';
-          this.nome = '';
-          this.$refs.form.reset();
-          this.$refs.form.resetValidation();
         },
         deleteModalidade(){
           let response = confirm('Are you sure you want to delete this item?');
@@ -490,6 +508,7 @@
           this.getEscaloes();
           this.getAllTreinadores();
           this.getGraduacoes();
+          this.getTreinos();
       }
     }
 </script>
