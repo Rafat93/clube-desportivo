@@ -2,16 +2,13 @@
   <div>
     <v-row>
       <v-col cols="4">
-        <div>
+        <div style="display: block">
           <v-text-field
           v-model="search"
-          label="Search"
-          single-line
+          label="Pesquisa"
           hide-details
-          :prepend-inner-icon=" mdiMagnify "
         ></v-text-field>
         </div>
-
       </v-col>
     </v-row>
 
