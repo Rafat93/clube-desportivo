@@ -25,6 +25,9 @@
           <v-card-title class="justify-center">
             {{modalidade.nome}}
           </v-card-title>
+          <v-card-text align="center" v-show="treinadores.length == 0 || graduacoes.length == 0 || escaloes.length == 0" >
+            Nota: Não é possivel adicionar treinos sem adicionar treinadores, escalões e graduações à modalidade.
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -153,7 +156,7 @@
             <v-divider></v-divider>
             <v-card-text class="justify-center">
               <v-btn small color="primary" @click="adicionarEscalao" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
-              <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" @click="adicionarTreino" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
+              <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" :disabled="treinadores.length == 0 || graduacoes.length == 0 || escaloes.length == 0" @click="adicionarTreino" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
 
               <!--POPUP PARA ADICIONAR UMA GRADUACAO A ESTA MODALIDADE-->
               <v-dialog v-model="dialog_graduacao" width="500">
@@ -280,7 +283,6 @@
           modalidade: '',
           atletas: [],
           treinadores:[],
-          treinadoresExternos:[],
           all_treinadores:[],
           escaloes:[],
           graduacoes:[],
@@ -416,7 +418,6 @@
               code: this.code,
               nome: this.nome,
               siglaModalidade: this.$route.params.sigla
-
             })
               .then(() => {
                 this.$axios.$put('/api/graduacoes/'+this.code+'/modalidade/enroll/'+this.$route.params.sigla, {
@@ -453,14 +454,6 @@
         },
         editarModalidade(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/editar_modalidade');
-        },
-        treinadoresFilter(){
-          for (var i = 0; i <= this.all_treinadores.length; i++){
-            for (var j = 0; j <= this.treinadores.length; j++){
-              console.log("entrou");
-              console.log(this.all_treinadores[i])
-            }
-          }
         },
         cancelGraduacao(){
           this.dialog_graduacao= false;
@@ -516,10 +509,20 @@
           });
         },
         deleteEscalao(item){
-
+          this.$axios.$put('/api/escaloes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
+            .then(() => {
+              this.getEscaloes();
+            }).catch(error => {
+            console.log(error)
+          });
         },
         deleteGraduacao(item){
-
+          this.$axios.$put('/api/graduacoes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
+            .then(() => {
+              this.getGraduacoes();
+            }).catch(error => {
+            console.log(error)
+          });
         },
       },
       created() {
@@ -528,7 +531,6 @@
           this.getTreinadores();
           this.getEscaloes();
           this.getAllTreinadores();
-          this.treinadoresFilter();
           this.getGraduacoes();
       }
     }
