@@ -8,20 +8,22 @@
     <v-text-field
       v-model="code"
       :counter="5"
-      :rules="coderules"
+      :rules="codeRules"
       label="Código"
       required
     ></v-text-field>
-    <v-text-field
+    <v-select
       v-model="tipo"
-      :counter="20"
-      :rules="tipoRules"
-      label="Tipo"
-      required
-    ></v-text-field>
+      :items="all_tipo_produtos"
+      label="Selecione um tipo de produto."
+      item-text="nome"
+      item-value="nome"
+      chips
+      persistent-hint
+    ></v-select>
     <v-text-field
       v-model="descricao"
-      :counter="9"
+      :counter="50"
       :rules="descricaoRules"
       label="Descrição"
       required
@@ -73,44 +75,58 @@
     export default {
         name: "adicionar_produto",
       data: () => ({
+        valid: true,
+        all_tipo_produtos:[],
+
         code: '',
-        codeRules:[],
+        codeRules:[
+          v => !!v || 'Código é um campo obrigatório',
+          v => (v && v.length <= 5) || 'Código deve ter até 10 caracteres',
+        ],
 
         tipo:'',
-        tipoRules:[],
+        tipoRules:[
+          v => !!v || 'Tipo é um campo obrigatório',
+        ],
 
         descricao: '',
         descricaoRules:[],
 
-        preco:'',
+        preco:0,
         precoRules:[
-          v => !!v || 'Época é um campo obrigatório',
+          v => !!v || 'Preço é um campo obrigatório',
         ],
 
-        stock:'',
-        stockRules:[],
+        stock:0,
+        stockRules:[
+          v => !!v || 'Stock é um campo obrigatório',
+        ],
       }),
+      created() {
+          this.getTipoProdutos();
+      },
       methods: {
-
+        getTipoProdutos(){
+          this.$axios.$get('/api/tipo_produtos')
+          .then((all_tipo_produtos) => {
+            this.all_tipo_produtos = all_tipo_produtos;
+          });
+        },
         validate () {
           if (this.$refs.form.validate()) {
-            this.code = this.code + 1;
-            /*this.$axios.$post('/api/inscricoes', {
-              nome: this.nome,
-              email: this.email,
-              code: "INSC_"+this.nif,
-              morada: this.morada,
-              numContribuinte: this.nif,
-              dataNascimento: this.selectedDate,
-              numIdentificacaoCivil: this.nic,
-
+            this.$axios.$post('/api/produtos/', {
+              code: this.code,
+              tipo: this.tipo,
+              descricao: this.descricao,
+              preco: this.preco,
+              stock: this.stock,
             })
               .then(() => {
-                this.$router.push('/')
+                this.$router.push('/adminer/produtos/list')
               })
               .catch(error => {
                 console.log(error)
-              })*/
+              })
           }
 
         },

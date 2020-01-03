@@ -137,12 +137,8 @@
               this.text = 'ERRO: Sócio com o email '+item.email+ ' já existe.',
               this.snackbar = true
           });
-
-
         },
-
         deleteItem (item) {
-
           let response = confirm('Are you sure you want to delete this item?');
           if(response == true){
               this.$axios.$delete('/api/inscricoes/'+item.code).then( inscricoes =>
