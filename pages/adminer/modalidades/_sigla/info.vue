@@ -1,5 +1,24 @@
 <template>
   <div>
+
+    <!--SNACKBAR DE CONFIRMAÇÃO -->
+    <v-snackbar
+      v-model="snackbar"
+      :bottom="y === 'bottom'"
+      :color="color"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      {{ text }}
+      <v-btn dark text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
+
     <v-row>
       <v-col>
         <v-card>
@@ -28,10 +47,10 @@
                       :items-per-page="10"
                       class="elevation-1"
                     >
-                      <template slot="items" slot-scope="props">
-                        <tr @click="props.expanded = !props.expanded">
-                          <td class="text-xs">{{ props.item.nome }}</td>
-                        </tr>
+                      <template v-slot:item.action="{ item }" >
+                        <v-icon @click="deleteTreinador(item)">
+                          {{'mdi-delete'}}
+                        </v-icon>
                       </template>
                     </v-data-table>
                   </div>
@@ -54,11 +73,10 @@
                       :items-per-page="10"
                       class="elevation-1"
                     >
-                      <template slot="items" slot-scope="props">
-                        <tr @click="props.expanded = !props.expanded">
-                          <td class="text-xs">{{ props.item.nome }}</td>
-                          <td class="text-xs">{{ props.item.numeroSocio }}</td>
-                        </tr>
+                      <template v-slot:item.action="{ item }" >
+                        <v-icon @click="deleteAtleta(item)">
+                          {{'mdi-delete'}}
+                        </v-icon>
                       </template>
                     </v-data-table>
                   </div>
@@ -66,8 +84,9 @@
               </v-card-text>
             </v-card>
           </v-col>
-
         </v-row>
+
+
         <v-row>
           <v-col>
             <v-card>
@@ -84,10 +103,10 @@
                       :items-per-page="10"
                       class="elevation-1"
                     >
-                      <template slot="items" slot-scope="props">
-                        <tr @click="props.expanded = !props.expanded">
-                          <td class="text-xs">{{ props.item.nome }}</td>
-                        </tr>
+                      <template v-slot:item.action="{ item }" >
+                        <v-icon @click="deleteEscalao(item)">
+                          {{'mdi-delete'}}
+                        </v-icon>
                       </template>
                     </v-data-table>
                   </div>
@@ -98,7 +117,7 @@
           <v-col>
             <v-card>
               <v-card-title class="justify-center">
-                Graduações {{graduacoes}}
+                Graduações
               </v-card-title>
               <v-card-text>
                 <v-divider></v-divider>
@@ -109,7 +128,11 @@
                       :items="graduacoes"
                       :items-per-page="10"
                       class="elevation-1"
-                    >
+                    ><template v-slot:item.action="{ item }" >
+                      <v-icon @click="deleteGraduacao(item)">
+                        {{'mdi-delete'}}
+                      </v-icon>
+                    </template>
                     </v-data-table>
                   </div>
                 </div>
@@ -118,6 +141,8 @@
           </v-col>
         </v-row>
       </v-col>
+
+
       <!--COLUNA COM AS ACOES-->
       <v-col cols="2">
         <v-row>
@@ -213,6 +238,9 @@
 
 
               <v-btn small color="warning" @click="" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon>Editar</v-btn>
+              <v-btn small color="error" @click="deleteModalidade" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-delete'}}</v-icon>Remover</v-btn>
+
+
             </v-card-text>
           </v-card>
         </v-row>
@@ -245,6 +273,7 @@
       data () {
         return {
 
+          valid: true,
           dialog_treinador: false,
           dialog_graduacao: false,
           treinadorSelecionado: '',
@@ -283,6 +312,7 @@
               sortable: false,
               value: 'numeroSocio'
             },
+            { text: 'Ações', value: 'action', sortable: false },
           ],
           headers_escaloes:[
             {
@@ -303,6 +333,7 @@
               sortable: false,
               value: 'idadeMax'
             },
+            { text: 'Ações', value: 'action', sortable: false },
           ],
           headers_graduacoes:[
             {
@@ -311,6 +342,7 @@
               sortable: false,
               value: 'nome'
             },
+            { text: 'Ações', value: 'action', sortable: false },
           ],
           headers_treinadores:[
             {
@@ -325,7 +357,18 @@
               sortable: false,
               value: 'numeroCedula'
             },
+            { text: 'Ações', value: 'action', sortable: false },
           ],
+
+          // ---- SNACKBAR INFO -----
+          color: '',
+          mode: '',
+          snackbar: false,
+          text: '',
+          timeout: 4000,
+          x: null,
+          y: 'top',
+          // ------------------------
 
 
         }
@@ -411,7 +454,59 @@
           this.nome = '';
           this.$refs.form.reset();
           this.$refs.form.resetValidation();
-        }
+        },
+        deleteModalidade(){
+          let response = confirm('Are you sure you want to delete this item?');
+          if(response == true){
+
+            // CONFIRMAR SE EXISTEM ATLETAS NA MODALIDADE
+            if (this.atletas.length != 0){
+              this.color = 'red';
+              this.text = 'Não é possivel remover a modalidade, porque existem atletas nela inscritos.';
+              this.snackbar = true;
+            }
+            // CONFIRMAR SE EXISTEM TREINADORES NA MODALIDADE
+            if (this.treinadores.length != 0){
+              this.color = 'red';
+              this.text = 'Não é possivel remover a modalidade, porque existem treinadores nela inscritos.';
+              this.snackbar = true;
+            }
+            // REMOVER A MODALIDADE
+            if(this.atletas.length == 0 && this.treinadores.length == 0){
+              this.$axios.$delete('/api/inscricoes/'+item.code).then( inscricoes =>
+                {
+                  this.color = 'green';
+                  this.text = 'Inscrição com o código - '+item.code+' - eliminada com sucesso!';
+                  this.snackbar = true;
+                  this.getInscricoes();
+                }
+              );
+            }
+          }
+        },
+        deleteAtleta(item){
+
+          this.$axios.$put('/api/atletas/'+item.email+'/modalidade/unroll/'+this.$route.params.sigla)
+            .then(() => {
+              this.getAtletas();
+            }).catch(error => {
+            console.log(error)
+          });
+        },
+        deleteTreinador(item){
+          this.$axios.$put('/api/treinadores/'+item.email+'/modalidade/unroll/'+this.$route.params.sigla)
+            .then(() => {
+              this.getTreinadores();
+            }).catch(error => {
+              console.log(error)
+          });
+        },
+        deleteEscalao(item){
+
+        },
+        deleteGraduacao(item){
+
+        },
       },
       created() {
           this.getModalidade();
