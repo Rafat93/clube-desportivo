@@ -9,9 +9,21 @@
       v-model="code"
       :counter="5"
       :rules="codeRules"
-      label="Code"
+      label="Código"
       required
     ></v-text-field>
+    <v-select
+      v-model="treinadorSelecionado"
+      :items="treinadoresModalidade"
+      label="Selecione"
+      item-text="nome"
+      item-value="email"
+      chips
+      hint="Selecione um treinador."
+      persistent-hint
+    ></v-select>
+
+
 
 
     <v-btn
@@ -53,6 +65,9 @@
         name: "criar_treino",
       data: () => ({
         valid:true,
+
+        treinadoresModalidade:[],
+        treinadorSelecionado: '',
 
         code: '',
         codeRules:[
@@ -98,9 +113,16 @@
         },
         cancel(){
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info')
-
+        },
+        getTreinadoresModalidade(){
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/treinadores').then((treinadores) => {
+            this.treinadoresModalidade = treinadores;
+          });
         }
       },
+      created() {
+          this.getTreinadoresModalidade();
+      }
     }
 </script>
 
