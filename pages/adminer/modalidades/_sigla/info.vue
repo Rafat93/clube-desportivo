@@ -223,9 +223,6 @@
         </v-row>
       </v-col>
     </v-row>
-
-
-
   </div>
 
 </template>
@@ -468,6 +465,7 @@
           });
         },
         deleteEscalao(item){
+          console.log(item);
           this.$axios.$put('/api/escaloes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getEscaloes();
@@ -476,6 +474,7 @@
           });
         },
         deleteGraduacao(item){
+          console.log(item)
           this.$axios.$put('/api/graduacoes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getGraduacoes();

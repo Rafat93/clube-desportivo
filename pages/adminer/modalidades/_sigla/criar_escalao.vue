@@ -1,9 +1,5 @@
 <template>
-  <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
+  <v-form ref="form" v-model="valid" lazy-validation>
     <p class="subtitle-1 text-center">Criação de Novo Escalão</p>
     <v-text-field
       v-model="code"
@@ -36,34 +32,18 @@
       type="number"
     ></v-text-field>
 
-    <v-btn
-      :disabled="!valid"
-      color="success"
-      class="mr-4"
-      @click="validate"
-    >
+    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
       Adicionar
     </v-btn>
 
-    <v-btn
-      color="error"
-      class="mr-4"
-      @click="reset"
-    >
+    <v-btn color="error" class="mr-4" @click="reset">
       Reset Formulário
     </v-btn>
 
-    <v-btn
-      color="warning"
-      class="mr-4"
-      @click="resetValidation"
-    >
+    <v-btn color="warning" class="mr-4" @click="resetValidation">
       Reset Validação
     </v-btn>
-    <v-btn
-      color="error"
-      @click="cancel"
-    >
+    <v-btn color="error" @click="cancel">
       Cancelar
     </v-btn>
   </v-form>

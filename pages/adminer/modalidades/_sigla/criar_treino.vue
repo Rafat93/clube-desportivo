@@ -7,7 +7,7 @@
     <p class="subtitle-1 text-center">Criação de Novo Treino</p>
     <v-text-field
       v-model="code"
-      :counter="5"
+      :counter="10"
       :rules="codeRules"
       label="Código"
       required
@@ -15,15 +15,65 @@
     <v-select
       v-model="treinadorSelecionado"
       :items="treinadoresModalidade"
-      label="Selecione"
+      label="Treinador"
       item-text="nome"
       item-value="email"
       chips
-      hint="Selecione um treinador."
+      persistent-hint
+    ></v-select>
+    <v-select
+      v-model="graduacaoSelecionado"
+      :items="graduacoes"
+      label="Graduação"
+      item-text="nome"
+      item-value="code"
+      chips
+      persistent-hint
+    ></v-select>
+    <v-select
+      v-model="escalaoSelecionado"
+      :items="escaloes"
+      label="Escalão"
+      item-text="nome"
+      item-value="code"
+      chips
+      persistent-hint
+    ></v-select>
+    <v-text-field
+      v-model="horaInicio"
+      :counter="5"
+      label="Hora Início"
+      required
+      type="time"
+    ></v-text-field>
+    <v-text-field
+      v-model="horaFim"
+      :counter="5"
+      label="Hora Início"
+      required
+      type="time"
+    ></v-text-field>
+    <v-select
+      v-model="diaSemSelecionado"
+      :items="diasSemana"
+      label="Dia de Semana"
+      item-text="v"
+      item-value="v"
+      chips
       persistent-hint
     ></v-select>
 
+    treinador:{{treinadorSelecionado}}
+    <br>
+    code:{{code}}
+    <br>
+    horaI: {{horaInicio}}
+    <br>
+    horaF: {{horaFim}}
+    <br>
+    grad: {{graduacaoSelecionado}}
 
+    esc: {{escalaoSelecionado}}
 
 
     <v-btn
@@ -69,10 +119,26 @@
         treinadoresModalidade:[],
         treinadorSelecionado: '',
 
+        graduacaoSelecionado: '',
+        graduacoes:[],
+
+        escalaoSelecionado: '',
+        escaloes:[],
+
+        horaInicio: '',
+        horaFim: '',
+
+        diaSemSelecionado: '',
+        diasSemana:[
+          {v:"SEGUNDA"},{v:"TERCA"},{v:"QUARTA"},
+          {v:"QUINTA"},{v:"SEXTA"},{v:"SABADO"}
+          ,{v:"DOMINGO"}
+        ],
+
         code: '',
         codeRules:[
-          v => !!v || 'Sigla é um campo obrigatório',
-          v => (v && v.length <= 5 ) || 'Sigla deve ter até 5 caracteres.',
+          v => !!v || 'Code é um campo obrigatório',
+          v => (v && v.length <= 10 ) || 'Code deve ter até 10 caracteres.',
         ],
 
         nome: '',
@@ -92,13 +158,19 @@
 
         validate () {
           if (this.$refs.form.validate()) {
-            this.$axios.$post('/api/modalidades', {
-              sigla: this.sigla,
-              nome: this.nome,
-              epocaDesportiva: this.epoca,
+            console.log("passou aqui.");
+            this.$axios.$post('/api/treinos/', {
+              code: this.code,
+              emailTreinador: this.treinadorSelecionado,
+              siglaModalidade: this.$route.params.sigla,
+              codeGraduacao: this.graduacaoSelecionado,
+              codeEscalao: this.escalaoSelecionado,
+              horaInicio: this.horaInicio,
+              horaFim: this.horaFim,
+              diaSemana: this.diaSemSelecionado
             })
               .then(() => {
-                this.$router.push('adminer/modalidades/list')
+                this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info')
               })
               .catch(error => {
                 console.log(error)
@@ -118,10 +190,24 @@
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/treinadores').then((treinadores) => {
             this.treinadoresModalidade = treinadores;
           });
-        }
+        },
+        getEscaloes(){
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/escaloes/').then((escaloes) => {
+            console.log("escaloes: "+escaloes);
+            this.escaloes = escaloes;
+          });
+        },
+        getGraduacoes(){
+          this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/graduacoes/').then((graduacoes) => {
+            console.log("Graduacoes"+graduacoes);
+            this.graduacoes = graduacoes;
+          });
+        },
       },
       created() {
           this.getTreinadoresModalidade();
+          this.getEscaloes();
+          this.getGraduacoes();
       }
     }
 </script>
