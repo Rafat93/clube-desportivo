@@ -268,7 +268,7 @@ export default {
           to: '/modalidades/list'
         },
         {
-          icon: 'mdi-basketball',
+          icon: 'mdi-diamond-stone',
           title: 'Produtos',
           to: '/produtos/list'
         },
@@ -295,7 +295,7 @@ export default {
           to: '/modalidades/list'
         },
         {
-          icon: 'mdi-basketball',
+          icon: 'mdi-diamond-stone',
           title: 'Produtos',
           to: '/produtos/list'
         },

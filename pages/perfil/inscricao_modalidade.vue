@@ -11,27 +11,31 @@
               <v-select
                 v-model="modalidadeSelecionada"
                 :items="modalidades"
-                label="Selecione"
+                label="Selecione uma modalidade."
                 item-text="nome"
                 item-value="sigla"
                 chips
-                hint="Selecione uma modalidade."
                 persistent-hint
                 @change="getInfoModalidade"
               ></v-select>
               <div v-if="modalidadeSelecionada != ''">
-                {{modalidadeInfo}}
                 <v-select
-                  v-model="escalaoSelecionado"
-                  :items="modalidadeInfo.graduacoes"
-                  label="Selecione"
+                  v-model="graduacaoSelecionado"
+                  :items="graduacoes"
+                  label="Selecione uma graduação"
                   item-text="nome"
+                  item-value="code"
                   chips
-                  hint="Selecione uma graduação."
                   persistent-hint
                   @change="getInfoModalidade"
                 ></v-select>
               </div>
+              <div align="center">
+                <v-btn @click="submeter" color="success" :disabled="graduacaoSelecionado == ''">Submeter</v-btn>
+                <v-btn to="/perfil/info" color="error" >Cancelar</v-btn>
+              </div>
+
+
             </v-card-text>
 
           </v-card>
@@ -49,7 +53,8 @@
           modalidades:[],
           modalidadeSelecionada:'',
           modalidadeInfo:[],
-          escalaoSelecionado: '',
+          graduacaoSelecionado: '',
+          graduacoes:[],
         }
       },
       methods:{
@@ -62,10 +67,26 @@
           },
           getInfoModalidade(){
             this.$axios.$get('/api/modalidades/'+this.modalidadeSelecionada)
-              .then((modalidades) => {
-                this.modalidadeInfo = modalidades;
+              .then((modalidade) => {
+                this.modalidadeInfo = modalidade;
               });
-          }
+            this.$axios.$get('/api/modalidades/'+this.modalidadeSelecionada+'/graduacoes')
+              .then((graduacoes) => {
+                this.graduacoes = graduacoes;
+              });
+          },
+          submeter(){
+            this.$axios.$post('/api/inscricoes/atleta',{
+              code: "INSC_"+this.modalidadeSelecionada+"_"+this.$auth.user.sub,
+              email: this.$auth.user.sub,
+              siglaModalidade: this.modalidadeSelecionada
+            }).then(() => {
+              this.$router.push('/perfil/info')
+            })
+              .catch(error => {
+                console.log(error)
+              })
+          },
       },
       created() {
           this.getModalidades();
