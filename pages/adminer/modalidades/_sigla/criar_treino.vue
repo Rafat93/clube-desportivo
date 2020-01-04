@@ -200,13 +200,11 @@
         },
         getEscaloes(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/escaloes/').then((escaloes) => {
-            console.log("escaloes: "+escaloes);
             this.escaloes = escaloes;
           });
         },
         getGraduacoes(){
           this.$axios.$get('/api/modalidades/'+this.$route.params.sigla+'/graduacoes/').then((graduacoes) => {
-            console.log("Graduacoes"+graduacoes);
             this.graduacoes = graduacoes;
           });
         },
