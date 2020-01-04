@@ -56,7 +56,9 @@
             </v-card-actions>
           </v-card>
           <template v-slot:activator="{ on }">
-            <v-btn small color="primary" v-on="on" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon>Tipo Produto</v-btn>
+            <v-col align="center">
+              <v-btn small v-on="on"  ><v-icon>{{'mdi-plus'}}</v-icon>Tipo Produto</v-btn>
+            </v-col>
           </template>
         </v-dialog>
       </v-col>

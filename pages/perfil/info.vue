@@ -86,6 +86,27 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row v-if="this.$auth.user.groups == 'Treinador'">
+      <v-col>
+        <v-card>
+          <v-card-title class="justify-center">
+            Treinos
+          </v-card-title>
+          <v-card-text>
+            <v-divider></v-divider>
+            <div class="text--primary">
+              <v-data-table
+                :headers="headers_treinos"
+                :items="treinos"
+                :items-per-page="10"
+                class="elevation-1"
+              >
+              </v-data-table>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 
 </template>
@@ -96,6 +117,45 @@
       data: () => ({
         user: '',
         modalidades:[],
+        treinos:[],
+        headers_treinos:[
+          {
+            text: 'Dia Semana',
+            align: 'left',
+            sortable: false,
+            value: 'diaSemana'
+          },
+          {
+            text: 'Hora Inicio',
+            align: 'left',
+            sortable: false,
+            value: 'horaInicio'
+          },
+          {
+            text: 'Hora Fim',
+            align: 'left',
+            sortable: false,
+            value: 'horaFim'
+          },
+          {
+            text: 'Modalidade',
+            align: 'left',
+            sortable: false,
+            value: 'siglaModalidade'
+          },
+          {
+            text: 'Escalão',
+            align: 'left',
+            sortable: false,
+            value: 'codeEscalao'
+          },
+          {
+            text: 'Graduação',
+            align: 'left',
+            sortable: false,
+            value: 'codeGraduacao'
+          },
+        ],
         headers_modalidades:[
           {
             text: 'Nome',
@@ -143,6 +203,14 @@
           }
 
         },
+        getTreinos(){
+          if(this.$auth.user.groups == 'Treinador' ) {
+            this.$axios.$get('/api/treinadores/'+this.$auth.user.sub+'/treinos').then((treinos) => {
+              this.treinos = treinos;
+            });
+          }
+
+        },
         editarPerfil(){
           this.$router.push("/perfil/"+this.user.email+"/editar");
         },
@@ -157,6 +225,7 @@
       created() {
           this.getUser();
           this.getModalidades();
+          this.getTreinos();
       }
 
     }

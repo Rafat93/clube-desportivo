@@ -1,13 +1,23 @@
 <template>
   <div>
     <v-row>
-      <v-col>
-        <v-btn color="primary" to="/adminer/modalidades/criar_modalidade" >Criar Modalidade</v-btn>
+      <v-col cols="4">
+        <div style="display: block">
+          <v-text-field
+            v-model="search"
+            label="Pesquisa"
+            hide-details
+          ></v-text-field>
+        </div>
+      </v-col>
+      <v-col align="center">
+        <v-btn small style="margin-bottom: -50px;" to="/adminer/modalidades/criar_modalidade"  ><v-icon>{{'mdi-plus'}}</v-icon>Modalidade</v-btn>
       </v-col>
     </v-row>
     <v-data-table
       :headers="headers"
       :items="modalidades"
+      :search="search"
       :items-per-page="10"
       class="elevation-1"
     >
@@ -28,6 +38,7 @@
   export default {
     data () {
       return {
+        search:'',
         headers: [
           {
             text: 'Sigla',
