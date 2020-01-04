@@ -122,6 +122,7 @@
 
       <v-btn
         color="warning"
+        class="mr-4"
         @click="resetValidation"
       >
         Reset Validação
@@ -143,16 +144,13 @@
       name: "register",
       data: () => ({
         valid: true,
-        checkbox: false,
+
         date: new Date(),
 
         valorQuotaAnual: 12,
 
         showPicker: false,
         selectedDate: '',
-
-        modalidades:[],
-        checkboxes:[],
 
         // ---- SNACKBAR INFO -----
         color: '',

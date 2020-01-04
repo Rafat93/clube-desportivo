@@ -11,7 +11,7 @@
         </div>
       </v-col>
       <v-col align="center">
-        <v-btn small style="margin-bottom: -50px;" @click="redirectCriar"><v-icon>{{'mdi-plus'}}</v-icon>Atletas</v-btn>
+        <v-btn small style="margin-bottom: -50px;" @click="redirectCriar"><v-icon>{{'mdi-plus'}}</v-icon>Atleta</v-btn>
       </v-col>
     </v-row>
     <v-data-table
