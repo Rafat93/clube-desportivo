@@ -10,6 +10,11 @@
         ></v-text-field>
         </div>
       </v-col>
+      <v-col>
+        <v-col align="center">
+          <v-btn small  @click="redirectCriar"><v-icon>{{'mdi-plus'}}</v-icon>Treinador</v-btn>
+        </v-col>
+      </v-col>
     </v-row>
 
     <v-data-table
@@ -33,12 +38,11 @@
 </template>
 
 <script>
-  import { mdiMagnify } from '@mdi/js';
     export default {
         name: "list",
       data () {
         return {
-          icon: mdiMagnify,
+
           dialog: false,
           search: '',
           headers: [
@@ -70,16 +74,22 @@
         redirectInfo(item){
           this.$router.push('/adminer/treinadores/'+item.email+'/info');
         },
+        redirectCriar(){
+          this.$router.push('/adminer/treinadores/criar_treinador');
+        },
+        getTreinadores(){
+          this.$axios.$get('/api/treinadores')
+            .then((treinadores) => {
+              this.treinadores = treinadores;
+            });
+        },
+        redirectCriar(){
+          this.$router.push('/adminer/socios/criar_socio');
+        },
 
       },
       created () {
-
-        this.$axios.$get('/api/treinadores')
-          .then((treinadores) => {
-            this.treinadores = treinadores;
-          });
-
-
+        this.getTreinadores();
       }
     }
 </script>

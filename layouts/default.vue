@@ -191,6 +191,11 @@ export default {
           title: 'Register',
           to: '/register'
         },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
 
       itemsAdmin: [
@@ -210,6 +215,21 @@ export default {
           to: '/adminer/atletas/list'
         },
         {
+          icon: 'mdi-account-group',
+          title: 'Sócios',
+          to: '/adminer/socios/list'
+        },
+        {
+          icon: 'mdi-account-star',
+          title: 'Treinadores',
+          to: '/adminer/treinadores/list'
+        },
+        {
+          icon: 'mdi-account-tie',
+          title: 'Administradores',
+          to: '/adminer/admins/list'
+        },
+        {
           icon: 'mdi-diamond-stone',
           title: 'Produtos',
           to: '/adminer/produtos/list'
@@ -219,15 +239,11 @@ export default {
           title: 'Inscrições',
           to: '/adminer/inscricoes/list'
         },
+
         {
-          icon: 'mdi-account-group',
-          title: 'Sócios',
-          to: '/adminer/socios/list'
-        },
-        {
-          icon: 'mdi-account-star',
-          title: 'Treinadores',
-          to: '/adminer/treinadores/list'
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
         },
       ],
       items_atleta: [
@@ -250,7 +266,12 @@ export default {
           icon: 'mdi-basketball',
           title: 'Produtos',
           to: '/produtos/list'
-        }
+        },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       items_socio: [
         {
@@ -272,7 +293,12 @@ export default {
           icon: 'mdi-basketball',
           title: 'Produtos',
           to: '/produtos/list'
-        }
+        },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       items_treinador: [
         {
@@ -289,7 +315,11 @@ export default {
           icon: 'mdi-basketball',
           title: 'Modalidades',
           to: '/modalidades/list'
-        }
+        },{
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       miniVariant: false,
       right: true,

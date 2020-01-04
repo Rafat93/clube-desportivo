@@ -21,7 +21,7 @@
       v-model="valid"
       lazy-validation
     >
-      <p class="subtitle-1 text-center">Inscrição de Sócio/Atleta</p>
+      <p class="subtitle-1 text-center">Criação de Atleta</p>
       <v-text-field
         v-model="nome"
         :counter="30"
@@ -91,17 +91,23 @@
         :counter="80"
         required
       ></v-text-field>
+      <v-text-field
+        v-model="password"
+        :counter="20"
+        :rules="passwordRules"
+        type="password"
+        label="Password"
+        required
+      ></v-text-field>
+      <v-text-field
+        v-model="password_confirmation"
+        :counter="20"
+        :rules="passwordRules"
+        label="Confirmação de Password"
+        type="password"
+        required
+      ></v-text-field>
 
-
-      <v-col cols="8">
-        <v-text-field
-          label="Quota anual:"
-          v-model="valorQuotaAnual"
-          prefix="€"
-          filled
-          readonly
-        ></v-text-field>
-      </v-col>
 
       <v-btn
         :disabled="!valid"
@@ -136,21 +142,20 @@
       </v-btn>
     </v-form>
   </div>
-
 </template>
 
 <script>
     export default {
-      name: "register",
+        name: "criar_atleta",
       data: () => ({
         valid: true,
-
         date: new Date(),
 
-        valorQuotaAnual: 12,
 
         showPicker: false,
         selectedDate: '',
+        numeroSocios:'',
+
 
         // ---- SNACKBAR INFO -----
         color: '',
@@ -188,6 +193,12 @@
           v => !!v || 'Email é um campo obrigatório',
           v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido',
         ],
+        password:'',
+        password_confirmation: '',
+        passwordRules:[
+          v => !!v || 'Password é um campo obrigatório',
+          v => (v && v.length >= 4 ) || 'Password deve ter pelo menos 4 digitos.',
+        ],
 
       }),
 
@@ -197,29 +208,29 @@
         },
         validate () {
           if (this.$refs.form.validate()) {
-            this.$axios.$post('/api/inscricoes', {
-              nome: this.nome,
-              email: this.email,
-              code: "INSC_"+this.nif,
-              morada: this.morada,
-              numContribuinte: this.nif,
-              dataNascimento: this.selectedDate,
-              numIdentificacaoCivil: this.nic,
-
-            })
-              .then(() => {
-                this.color = 'green';
-                this.text = 'Inscrição submetida com sucesso! A sua inscrição ficará a aguardar aceitação. ' +
-                  'Receberá novas informações no seu email.';
-                this.snackbar = true;
-                setTimeout(() => {
-                  this.$router.push('/');
-                }, 5000);
-
+            if (this.password_confirmation == this.password) {
+              this.$axios.$post('/api/atletas', {
+                numeroSocio: this.numeroSocios + 1,
+                nome: this.nome,
+                email: this.email,
+                password: this.password,
+                dataNascimento: this.selectedDate,
+                numIdentificacaoCivil: this.nic,
+                numContribuinte: this.nif,
+                morada: this.morada,
               })
-              .catch(error => {
-                console.log(error)
-              })
+                .then(() => {
+                  this.$router.push('/adminer/atletas/list');
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            }else {
+              this.color = 'red';
+              this.text = 'Password e confirmação não correspondem.';
+              this.snackbar = true;
+
+            }
           }
 
         },
@@ -230,19 +241,23 @@
           this.$refs.form.resetValidation()
         },
         cancel(){
-          this.$router.push('/')
-
+          this.$router.push('/adminer/atletas/list')
+        },
+        getSocios(){
+          this.$axios.$get('/api/socios/')
+            .then((socios) => {
+              this.numeroSocios = socios.length;
+            });
         }
       },
       created() {
+          this.getSocios();
       },
       computed:{
         getEndDate(){
           var endDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDay()-2);
           return endDate.toISOString().slice(0,10)
         },
-
-
       }
     }
 </script>
