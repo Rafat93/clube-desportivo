@@ -75,7 +75,7 @@
             }
         });
         promise.then(() => {
-          this.$toast.success('You are logged in!', {duration : 700});
+          this.$toast.success('Login com sucesso!', {duration : 700});
           // check if the user $auth.user object is set
           console.log(this.$auth.user);
           this.message = true;
@@ -89,7 +89,7 @@
           // }
         });
         promise.catch(() => {
-          this.$toast.error('Sorry, you cant login. Ensure your credentials are correct')
+          this.$toast.error('Credenciais inválidas')
         })
       },
       onReset() {
