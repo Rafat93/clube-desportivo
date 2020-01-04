@@ -162,7 +162,7 @@
                       class="elevation-1"
                     >
                       <template v-slot:item.action="{ item }" >
-                        <v-icon @click="">
+                        <v-icon @click="deleteTreino(item)">
                           {{'mdi-delete'}}
                         </v-icon>
                       </template>
@@ -307,11 +307,24 @@
           treinos: [],
           headers_treinos:[
             {
-              text: 'horaInicio',
+              text: 'Codigo',
+              align: 'left',
+              sortable: false,
+              value: 'code'
+            },
+            {
+              text: 'Hora de Inicio',
               align: 'left',
               sortable: false,
               value: 'horaInicio'
-            }
+            },
+            {
+              text: 'Hora de Fim',
+              align: 'left',
+              sortable: false,
+              value: 'horaFim'
+            },
+            { text: 'Ações', value: 'action', sortable: false },
           ],
           headers_escaloes:[
             {
@@ -492,7 +505,7 @@
           });
         },
         deleteGraduacao(item){
-          console.log(item)
+          console.log(item);
           this.$axios.$put('/api/graduacoes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getGraduacoes();
@@ -500,6 +513,15 @@
             console.log(error)
           });
         },
+        deleteTreino(item){
+          console.log(item);
+          this.$axios.$put('/api/treinos/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
+            .then(() => {
+              this.getTreinos();
+            }).catch(error => {
+            console.log(error)
+          });
+        }
       },
       created() {
           this.getModalidade();

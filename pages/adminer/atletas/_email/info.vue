@@ -26,21 +26,40 @@
           <v-card-text>
             <div class="text--primary">
               <p></p>
-              <div class="group-form">
-                <div class="input">Nome:</div>
-                {{atleta.nome}}
-              </div>
-
-              <div class="group-form">
-                <div class="input">Email:</div>
-                {{atleta.email}}
-              </div>
-
-              <div class="group-form">
-                <div class="input">Nº Socio:</div>
-                {{atleta.numeroSocio}}
-              </div>
-
+              <v-row>
+                <v-col>
+                  <div class="group-form">
+                    <div class="input">Nº Socio:</div>
+                    {{atleta.numeroSocio}}
+                  </div>
+                  <div class="group-form">
+                    <div class="input">Nome:</div>
+                    {{atleta.nome}}
+                  </div>
+                  <div class="group-form">
+                    <div class="input">Email:</div>
+                    {{atleta.email}}
+                  </div>
+                  <div class="group-form">
+                    <div class="input">Data de Nascimento:</div>
+                    {{atleta.dataNascimento}}
+                  </div>
+                </v-col>
+                <v-col>
+                  <div class="group-form">
+                    <div class="input">Nº Identificação Civil:</div>
+                    {{atleta.numIdentificacaoCivil}}
+                  </div>
+                  <div class="group-form">
+                    <div class="input">Nº Identificação Fiscal:</div>
+                    {{atleta.numContribuinte}}
+                  </div>
+                  <div class="group-form">
+                    <div class="input">Morada:</div>
+                    {{atleta.morada}}
+                  </div>
+                </v-col>
+              </v-row>
             </div>
           </v-card-text>
         </v-card>
@@ -53,46 +72,8 @@
           <v-divider></v-divider>
           <v-card-text class="justify-center">
             <v-btn small color="primary"  width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Modalidade</v-btn>
-            <v-dialog v-model="dialog" width="700">
-              <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title>
-                  Editar o atleta - {{atleta.nome}}
-                </v-card-title>
+            <v-btn small v-on="on" color="warning" width="130px;" @click="editarAtleta" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
 
-                <v-card-text>
-                  <br>
-                  <!--FORMULARIO PARA EDITAR O atleta-->
-                  <v-text-field
-                    v-model="atleta.nome"
-                    :counter="30"
-                    :rules="nomeRules"
-                    label="Nome"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="atleta.numeroCedula"
-                    :counter="10"
-                    label="Nº Cédula"
-                    required
-                  ></v-text-field>
-
-                </v-card-text>
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" text @click="acceptEditar" >
-                    Aceitar
-                  </v-btn>
-                  <v-btn color="error" text @click="cancelEditar">
-                    Cancelar
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-              <template v-slot:activator="{ on }">
-                <v-btn small v-on="on" color="warning" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
-              </template>
-            </v-dialog>
 
             <!--DIALOG PARA ALTERAR A PASSWORD-->
             <v-dialog v-model="dialog_password" width="700">
@@ -150,7 +131,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="10">
         <v-card>
           <v-card-title class="justify-center">
             Modalidades
@@ -251,26 +232,8 @@
           );
         }
       },
-      cancelEditar(){
-        this.dialog = false;
-        this.getAtleta();
-        this.dialog_password = false;
-      },
-      acceptEditar(){
-        this.$axios.$put('/api/atleta/'+this.atleta.email+'/',{
-
-          nome: this.atleta.nome,
-          password: this.atleta.password,
-          email: this.atleta.email,
-          numeroSocio: this.atleta.numeroSocio
-
-        }).then(
-          () => {
-            this.dialog = false;
-          }
-        ).catch(error => {
-          console.log(error)
-        })
+      editarAtleta(){
+        this.$router.push("/adminer/atletas/"+this.$route.params.email+"/editar_atleta");
       },
       passwordEditar(){
         console.log("CHEGOU AQUI");

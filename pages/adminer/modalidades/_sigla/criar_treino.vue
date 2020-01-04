@@ -170,7 +170,14 @@
               diaSemana: this.diaSemSelecionado
             })
               .then(() => {
-                this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info')
+                this.$axios.$put("/api/treinos/"+this.code+"/modalidade/enroll/"+this.$route.params.sigla, {
+                  code: this.code,
+                  siglaModalidade: this.$route.params.sigla,
+                }).then(() => {
+                  this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/info')
+                }).catch(error => {
+                  console.log(error)
+                })
               })
               .catch(error => {
                 console.log(error)
