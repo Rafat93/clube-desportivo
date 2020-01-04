@@ -16,9 +16,22 @@
         Close
       </v-btn>
     </v-snackbar>
+    <v-row>
+      <v-col cols="4">
+        <div style="display: block">
+          <v-text-field
+            v-model="search"
+            label="Pesquisa"
+            hide-details
+          ></v-text-field>
+        </div>
+      </v-col>
+
+    </v-row>
     <v-data-table
       :headers="headers"
       :items="inscricoes"
+      :search="search"
       :items-per-page="10"
       class="elevation-1"
     >
@@ -50,6 +63,7 @@
         name: "list",
       data () {
         return {
+          search: '',
           color: '',
           mode: '',
           snackbar: false,

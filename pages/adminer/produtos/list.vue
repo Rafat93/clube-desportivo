@@ -17,14 +17,24 @@
       </v-btn>
     </v-snackbar>
     <v-row>
-      <v-col>
-        <v-btn color="primary" to="/adminer/produtos/adicionar_produto" >Adicionar Produto</v-btn>
+      <v-col cols="4">
+        <div style="display: block">
+          <v-text-field
+            v-model="search"
+            label="Pesquisa"
+            hide-details
+          ></v-text-field>
+        </div>
+      </v-col>
+      <v-col align="center">
+        <v-btn small style="margin-bottom: -50px;" to="/adminer/produtos/adicionar_produto"><v-icon>{{'mdi-plus'}}</v-icon>Produto</v-btn>
       </v-col>
     </v-row>
     <v-data-table
       :headers="headers"
       :items="produtos"
       :items-per-page="10"
+      :search="search"
       class="elevation-1"
     >
       <template v-slot:item.action="{ item }">
@@ -46,6 +56,7 @@
   export default {
     data () {
       return {
+        search: '',
         color: '',
         mode: '',
         snackbar: false,
