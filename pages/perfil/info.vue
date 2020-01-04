@@ -51,7 +51,7 @@
                   </div>
                 </v-col>
                 <v-col>
-                  <v-btn small style="margin-bottom: -50px;" @click="redirectCriar"><v-icon>{{'mdi-plus'}}</v-icon> Inscrição numa Modalidade</v-btn>
+                  <v-btn small style="margin-bottom: -50px;" v-if="this.$auth.user.groups == 'Atleta' || this.$auth.user.groups == 'Socio'" @click="redirectCriar"><v-icon>{{'mdi-plus'}}</v-icon> Inscrição numa Modalidade</v-btn>
                 </v-col>
               </v-row>
             </div>

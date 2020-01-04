@@ -91,8 +91,6 @@
           x: null,
           y: 'top',
           // ------------------------
-
-
         }
       },
       computed:{
@@ -111,15 +109,17 @@
           this.$axios.$put('api/inscricoes/' + this.$route.params.code + '/confirm')
             .then(() => {
               // show snackbar
-              this.color = 'green';
+
               this.text = 'Aceite com sucesso!';
+              this.color = 'green';
               this.snackbar = true;
-              this.getInscricoes();
+
+
               setTimeout(() => {
                 this.$router.push('/adminer/inscricoes/list');
               }, 2000);
-
-            }).catch(error => {
+            })
+            .catch(error => {
               this.color = 'red';
               this.text = 'ERRO: Sócio com o email ' + item.email + ' já existe.';
               this.snackbar = true;
@@ -133,12 +133,14 @@
                 this.color = 'green';
                 this.text = 'Inscrição com o código - '+this.$route.params.code+' - eliminada com sucesso!';
                 this.snackbar = true;
-                this.getInscricoes();
+
                 setTimeout(() => {
                   this.$router.push('/adminer/inscricoes/list');
                 }, 2000);
               }
-            );
+            ).catch(error => {
+              console.log(error)
+            });
           }
         },
 

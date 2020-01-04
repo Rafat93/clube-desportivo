@@ -43,9 +43,7 @@
         >
           {{'mdi-check-box-outline'}}
         </v-icon>
-        <v-icon
-          @click="deleteItem(item)"
-        >
+        <v-icon @click="deleteItem(item)">
           {{'mdi-delete'}}
         </v-icon>
         <v-icon
@@ -147,13 +145,13 @@
             }
           ).catch(error => {
 
-            this.color = 'red',
+              this.color = 'red',
               this.text = 'ERRO: Sócio com o email '+item.email+ ' já existe.',
               this.snackbar = true
           });
         },
         deleteItem (item) {
-          let response = confirm('Tem aa certeza que deseja remover a inscrição?');
+          let response = confirm('Tem a certeza que deseja remover a inscrição?');
           if(response == true){
               this.$axios.$delete('/api/inscricoes/'+item.code).then( inscricoes =>
                 {
@@ -162,7 +160,9 @@
                   this.snackbar = true;
                   this.getInscricoes();
                 }
-              );
+              ).catch(error =>{
+                console.log(error)
+              });
           }
         },
       }
