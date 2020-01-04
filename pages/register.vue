@@ -163,7 +163,6 @@
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
 
-
       }),
       methods: {
         formatDate (date) {
