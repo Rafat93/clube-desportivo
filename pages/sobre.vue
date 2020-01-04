@@ -4,7 +4,7 @@
       <v-col>
         <v-card>
           <v-card-title class="justify-center">
-            <div>Sobre o </div>
+            <div>Sobre o {{this.clube.nome}}</div>
           </v-card-title>
           <v-divider></v-divider>
         </v-card>

@@ -231,6 +231,11 @@ export default {
         },
         {
           icon: 'mdi-diamond-stone',
+          title: 'Tipos Produtos',
+          to: '/adminer/tipo_produtos/list'
+        },
+        {
+          icon: 'mdi-diamond-stone',
           title: 'Produtos',
           to: '/adminer/produtos/list'
         },
