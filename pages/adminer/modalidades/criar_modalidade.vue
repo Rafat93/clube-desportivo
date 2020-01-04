@@ -61,6 +61,13 @@
     >
       Reset Validação
     </v-btn>
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="cancel"
+    >
+      Cancelar
+    </v-btn>
   </v-form>
 </template>
 
@@ -117,6 +124,9 @@
         resetValidation () {
           this.$refs.form.resetValidation()
         },
+        cancel(){
+          this.$router.push('/adminer/modalidades/list')
+        }
       },
     }
 </script>
