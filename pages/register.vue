@@ -85,15 +85,11 @@
       ></v-text-field>
     </v-col>
 
-
-
-
     <v-checkbox
       v-model="checkbox"
       :label="`Atleta `"
     ></v-checkbox>
 
-    {{selectedDate}}
 
     <!--<div v-if="this.checkbox === true">
 

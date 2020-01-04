@@ -81,7 +81,7 @@
 
         <div v-if="this.$auth.user.groups == 'Socio'">
           <v-list-item
-            v-for="(item, i) in items_treinador"
+            v-for="(item, i) in items_socio"
             :key="i"
             :to="item.to"
             router
@@ -240,6 +240,28 @@ export default {
           icon: 'mdi-account',
           title: 'Perfil',
           to: '/perfil/info'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Modalidade',
+          to: '/modalidade/list'
+        }
+      ],
+      items_socio: [
+        {
+          icon: 'mdi-apps',
+          title: 'Welcome',
+          to: '/'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Perfil',
+          to: '/perfil/info'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Modalidade',
+          to: '/modalidade/list'
         }
       ],
       items_treinador: [
@@ -252,6 +274,11 @@ export default {
           icon: 'mdi-account',
           title: 'Perfil',
           to: '/perfil/info'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Modalidade',
+          to: '/modalidade/list'
         }
       ],
       miniVariant: false,
