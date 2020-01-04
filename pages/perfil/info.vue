@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title class="justify-center">
             <div>Informações Pessoais</div>
-            <v-btn small style="margin-left: 20px;">Editar</v-btn>
+            <v-btn small style="margin-left: 20px;" @click="editarPerfil">Editar</v-btn>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
@@ -13,9 +13,13 @@
               <p></p>
               <v-row>
                 <v-col>
-                  <div class="group-form">
-                    <div class="input">Nº Socio:</div>
+                  <div class="group-form" v-if="this.$auth.user.groups == 'Atleta' || this.$auth.user.groups == 'Socio'">
+                    <div class="input" >Nº Socio:</div>
                     {{user.numeroSocio}}
+                  </div>
+                  <div class="group-form" v-if="this.$auth.user.groups == 'Treinador'">
+                    <div class="input" >Nº Cédula:</div>
+                    {{user.numeroCedula}}
                   </div>
                   <div class="group-form">
                     <div class="input">Nome:</div>
@@ -134,6 +138,10 @@
               this.modalidades = modalidades;
             });
           }
+
+        },
+        editarPerfil(){
+          this.$router.push("/perfil/"+this.user.email+"/editar");
 
         },
         redirectInfo(item){

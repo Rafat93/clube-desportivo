@@ -245,6 +245,11 @@ export default {
           icon: 'mdi-basketball',
           title: 'Modalidades',
           to: '/modalidades/list'
+        },
+        {
+          icon: 'mdi-basketball',
+          title: 'Produtos',
+          to: '/produtos/list'
         }
       ],
       items_socio: [
@@ -262,6 +267,11 @@ export default {
           icon: 'mdi-basketball',
           title: 'Modalidades',
           to: '/modalidades/list'
+        },
+        {
+          icon: 'mdi-basketball',
+          title: 'Produtos',
+          to: '/produtos/list'
         }
       ],
       items_treinador: [
