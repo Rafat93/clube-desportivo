@@ -21,7 +21,7 @@
       v-model="valid"
       lazy-validation
     >
-      <p class="subtitle-1 text-center">Inscrição de Sócio/Atleta</p>
+      <p class="subtitle-1 text-center">Inscrição de Sócio</p>
       <v-text-field
         v-model="nome"
         :counter="30"
@@ -60,7 +60,6 @@
           v-model="selectedDate"
           no-title
           @input="showPicker = false"
-          :format="formatDate"
           :max="getEndDate"
         ></v-date-picker>
 
@@ -197,7 +196,9 @@
         },
         validate () {
           if (this.$refs.form.validate()) {
+            console.log(this.selectedDate);
             this.$axios.$post('/api/inscricoes', {
+
               nome: this.nome,
               email: this.email,
               code: "INSC_"+this.nif,

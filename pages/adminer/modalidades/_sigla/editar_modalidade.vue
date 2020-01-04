@@ -78,7 +78,7 @@
         epocaRules:[
           v => !!v || 'Época é um campo obrigatório',
           v => (v && v.length === 9 ) || 'Época deve ter 9 caracteres. Seguindo o formato: 20XX/20XX.',
-          v => /([/])/.test(v) || 'Must have one special character [/]',
+          v => /([/])/.test(v) || 'Deve ter o caracter especial [/]',
         ],
       }),
       methods: {

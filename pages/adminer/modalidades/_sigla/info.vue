@@ -89,7 +89,6 @@
           </v-col>
         </v-row>
 
-
         <v-row>
           <v-col>
             <v-card>
@@ -117,6 +116,7 @@
               </v-card-text>
             </v-card>
           </v-col>
+
           <v-col>
             <v-card>
               <v-card-title class="justify-center">
@@ -143,7 +143,6 @@
             </v-card>
           </v-col>
         </v-row>
-
 
         <v-row>
           <v-col>
@@ -172,10 +171,8 @@
               </v-card-text>
             </v-card>
           </v-col>
-
         </v-row>
       </v-col>
-
 
       <!--COLUNA COM AS ACOES-->
       <v-col cols="2">
@@ -186,10 +183,9 @@
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text class="justify-center">
+
               <v-btn small color="primary" @click="adicionarEscalao" width="130px;" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Escalão</v-btn>
               <v-btn small color="primary" width="130px;" style="margin-bottom: 5px;" :disabled="treinadores.length == 0 || graduacoes.length == 0 || escaloes.length == 0" @click="adicionarTreino" ><v-icon>{{'mdi-plus'}}</v-icon>Treino</v-btn>
-
-
               <v-btn small color="primary"width="130px;" @click="adicionarGraduacao"  style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Graduação </v-btn>
 
               <!--POPUP PARA ADICIONAR UM TREINADOR A ESTA MODALIDADE-->
@@ -198,10 +194,8 @@
                   <v-card-title class="headline grey lighten-2" primary-title>
                     Adicionar Treinador a {{modalidade.nome}}
                   </v-card-title>
-
                   <v-card-text>
                     Por favor, selecione um treinador para adicionar à modalidade de {{modalidade.nome}}.
-
                     <v-select
                       v-model="treinadorSelecionado"
                       :items="all_treinadores"
@@ -214,7 +208,6 @@
                     ></v-select>
                   </v-card-text>
                   <v-divider></v-divider>
-
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="adicionarTreinador">
@@ -230,10 +223,8 @@
               </template>
             </v-dialog>
 
-
               <v-btn small color="warning" @click="editarModalidade" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon>Editar</v-btn>
               <v-btn small color="error" @click="deleteModalidade" width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-delete'}}</v-icon>Remover</v-btn>
-
 
             </v-card-text>
           </v-card>
@@ -456,7 +447,7 @@
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/editar_modalidade');
         },
         deleteModalidade(){
-          let response = confirm('Are you sure you want to delete this item?');
+          let response = confirm('Tem a certeza que deseja eliminar a modalidade?');
           if(response == true){
 
             // CONFIRMAR SE EXISTEM ATLETAS NA MODALIDADE
@@ -473,14 +464,18 @@
             }
             // REMOVER A MODALIDADE
             if(this.atletas.length == 0 && this.treinadores.length == 0){
-              this.$axios.$delete('/api/inscricoes/'+item.code).then( inscricoes =>
+              this.$axios.$delete('/api/modalidades/'+this.$route.params.sigla).then( () =>
                 {
                   this.color = 'green';
-                  this.text = 'Inscrição com o código - '+item.code+' - eliminada com sucesso!';
+                  this.text = 'Modalidade com a sigla - '+this.$route.params.sigla+' - eliminada com sucesso!';
                   this.snackbar = true;
-                  this.getInscricoes();
-                }
-              );
+                  setTimeout(() => {
+                    this.$router.push('/adminer/modalidades/list');
+                  }, 1000);
+                })
+                .catch(error => {
+                console.log(error)
+              });
             }
           }
         },

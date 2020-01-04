@@ -133,9 +133,9 @@
           });
       },
       deleteItem (item) {
-        let response = confirm('Are you sure you want to delete this item?');
+        let response = confirm('Tem a certeza que deseja eliminar o tipo de produto'+item.nome+'?');
         if(response == true){
-          this.$axios.$delete('/api/tipo_produtos/'+item.nome).then( tipo_produtos =>
+          this.$axios.$delete('/api/tipo_produtos/'+item.nome).then( () =>
             {
               this.color = 'green';
               this.text = 'Tipo Produto com o nome - '+item.nome+' - eliminado com sucesso!';
@@ -150,9 +150,6 @@
           });
         }
       },
-      editItem(item) {
-        //this.$router.push('/adminer/produtos/'+item.code+'/editar_produto');
-      }
     }
   }
 </script>
