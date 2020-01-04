@@ -146,7 +146,6 @@
       },
       validate () {
         if (this.$refs.form.validate()) {
-          console.log("data nascimento: "+this.selectedDate);
           if(this.selectedDate === ''){
             this.selectedDate = this.atleta.dataNascimento;
           }

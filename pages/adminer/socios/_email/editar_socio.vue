@@ -31,7 +31,6 @@
       :close-on-content-click="false"
       transition="scale-transition"
       offset-y
-      full-width
       max-width="290px"
       min-width="290px"
     >
@@ -56,15 +55,22 @@
     <v-text-field
       v-model="socio.numIdentificacaoCivil"
       :counter="9"
-      :rules="numIdentificacaoCivilRules"
+      :rules="nicRules"
       label="Nº Identificação Civil"
       required
     ></v-text-field>
     <v-text-field
       v-model="socio.numContribuinte"
       :counter="9"
-      :rules="numIdentificacaoCivilRules"
+      :rules="nifRules"
       label="Nº Identificação Civil"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="socio.morada"
+      :rules="moradaRules"
+      label="Morada"
+      :counter="80"
       required
     ></v-text-field>
 
@@ -111,6 +117,23 @@
       showPicker: false,
       selectedDate: '',
 
+      nomeRules:[
+        v => !!v || 'Nome é um campo obrigatório',
+        v => (v && v.length <= 20 ) || 'Nome deve ter até 20 caracteres.',
+      ],
+      nifRules:[
+        v => !!v || 'NIF é um campo obrigatório',
+        v => (v && v.length ===  9) || 'NIF deve ter 9 algarismos. ',
+      ],
+      nicRules:[
+        v => !!v || 'Nº Identificação Civil é um campo obrigatório',
+        v => (v && v.length ===  9) || 'Nº Identificação Civil deve ter 9 algarismos. ',
+      ],
+      moradaRules:[
+        v => !!v || 'Morada é um campo obrigatório',
+        v => (v && v.length <= 80 ) || 'Morada deve ter menos de 80 caracteres.',
+      ],
+
     }),
     methods: {
       formatDate (date) {
@@ -124,13 +147,18 @@
       },
       validate () {
         if (this.$refs.form.validate()) {
+          if(this.selectedDate === ''){
+            this.selectedDate = this.socio.dataNascimento;
+          }
           this.$axios.$put('/api/socios/'+this.$route.params.email, {
-            numeroSocio: this.numeroSocio,
-            nome: this.nome,
-            email: this.email,
-            dataNascimento: this.dataNascimento,
-            numIdentificacaoCivil: this.numIdentificacaoCivil,
-            numContribuinte: this.numContribuinte,
+            numeroSocio: this.socio.numeroSocio,
+            nome: this.socio.nome,
+            email: this.socio.email,
+            password: this.socio.password,
+            dataNascimento: this.selectedDate,
+            numIdentificacaoCivil: this.socio.numIdentificacaoCivil,
+            numContribuinte: this.socio.numContribuinte,
+            morada: this.socio.morada,
           })
             .then(() => {
               this.$router.push('/adminer/socios/'+this.$route.params.email+'/info');
@@ -147,7 +175,7 @@
         this.$refs.form.resetValidation()
       },
       cancel(){
-        this.$router.push('/adminer/socios/'+this.$router.params.email+"/info")
+        this.$router.push('/adminer/socios/'+this.$route.params.email+"/info")
       }
     },
     created() {

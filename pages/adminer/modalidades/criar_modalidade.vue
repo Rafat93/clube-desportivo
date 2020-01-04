@@ -27,6 +27,16 @@
       hint="20XX/20XX"
       required
     ></v-text-field>
+    <v-text-field
+      v-model="quotaAnual"
+      :counter="9"
+      :rules="quotaAnualRules"
+      label="Quota Anual"
+      hint="10.50"
+      required
+      type="number"
+      step="0.01"
+    ></v-text-field>
 
     <v-btn
       :disabled="!valid"
@@ -78,6 +88,10 @@
           v => (v && v.length === 9 ) || 'Época deve ter 9 caracteres. Seguindo o formato: 20XX/20XX.',
           v => /([/])/.test(v) || 'Must have one special character [/]',
         ],
+        quotaAnual:'',
+        quotaAnualRules:[
+          v => !!v || 'Época é um campo obrigatório',
+        ],
       }),
       methods: {
 
@@ -87,9 +101,10 @@
               sigla: this.sigla,
               nome: this.nome,
               epocaDesportiva: this.epoca,
+              quotaAnual: this.quotaAnual,
             })
               .then(() => {
-                this.$router.push('adminer/modalidades/list')
+                this.$router.push('/adminer/modalidades/list')
               })
               .catch(error => {
                 console.log(error)

@@ -31,21 +31,27 @@
         headers: [
           {
             text: 'Sigla',
-            align: 'left',
+            align: 'center',
             sortable: false,
             value: 'sigla'
           },
           {
             text: 'Nome',
-            align: 'left',
+            align: 'center',
             sortable: false,
             value: 'nome'
           },
           {
             text: 'Época Desportiva',
-            align: 'left',
+            align: 'center',
             sortable: false,
             value: 'epocaDesportiva'
+          },
+          {
+            text: 'Quota Anual (€)',
+            align: 'center',
+            sortable: false,
+            value: 'quotaAnual'
           },
           { text: 'Actions', value: 'action', sortable: false },
 

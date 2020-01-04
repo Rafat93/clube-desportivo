@@ -71,7 +71,41 @@
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="justify-center">
-            <v-btn small color="primary"  width="130px;" @click="subscreverModalidade" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Subscrever</v-btn>
+            <!--DIALOG PARA SUBSCREVER MODALIDADE-->
+            <v-dialog v-model="dialog_modalidade" width="500">
+              <v-card>
+                <v-card-title class="headline grey lighten-2" primary-title>
+                  Subscrever uma Modalidade
+                </v-card-title>
+                <v-card-text>
+                  Por favor, escolha a modalidade que deseja subscrever:
+                  <v-select
+                    v-model="modalidadeSelecionada"
+                    :items="modalidades_nao_subscritas"
+                    label="Selecione"
+                    item-text="nome"
+                    item-value="sigla"
+                    chips
+                    hint="Selecione uma modalidade."
+                    persistent-hint
+                  ></v-select>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" text @click="subscreverModalidade">
+                    Subscrever
+                  </v-btn>
+                  <v-btn color="error" text @click="cancelEditar">
+                    Cancelar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+              <template v-slot:activator="{ on }">
+                <v-btn small color="primary"  width="130px;" v-on="on" style="margin-bottom: 5px;" ><v-icon>{{'mdi-plus'}}</v-icon> Subscrever</v-btn>
+              </template>
+            </v-dialog>
+            <!--FIM DIALOG PARA SUBSCREVER MODALIDADE-->
             <v-btn small color="warning" width="130px;" @click="editarSocio" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
 
             <!--DIALOG PARA ALTERAR A PASSWORD-->
@@ -181,6 +215,12 @@
             dialog: false,
             //-------------------
 
+            //---Modalidade dialog----
+            dialog_modalidade: false,
+            modalidades_nao_subscritas: [],
+            modalidadeSelecionada:'',
+            //----------------
+
             nomeRules: [
               v => !!v || 'Name é um campo obrigatório',
               v => (v && v.length <= 30) || 'Nome deve ter até 30 caracteres',
@@ -224,8 +264,24 @@
               this.modalidades = modalidades;
             });
         },
+        getModalidadesLivres(){
+          this.$axios.get('/api/socios/'+this.$route.params.email+'/modalidades_nao_subscritas/')
+            .then((modalidades) => {
+              this.modalidades_nao_subscritas = modalidades.data;
+            });
+        },
         subscreverModalidade(){
-
+          this.$axios.$put('/api/socios/'+this.$route.params.email+'/modalidade/subscribe/'+this.modalidadeSelecionada,{
+            email: this.$route.params.email,
+            sigla: this.modalidadeSelecionada,
+          }).then(() => {
+            this.getModalidades();
+            this.dialog_modalidade = false;
+            this.modalidadeSelecionada = '';
+            this.getSocio();
+          }).catch(error => {
+            console.log(error);
+          });
         },
         deleteSocio(){
           let response = confirm('Tem a certeza que pretende eliminar o socio?');
@@ -248,8 +304,9 @@
         },
         cancelEditar(){
           this.dialog = false;
-          this.getTreinador();
+          this.getSocio();
           this.dialog_password = false;
+          this.dialog_modalidade = false;
         },
         passwordEditar(){
           console.log("CHEGOU AQUI");
@@ -276,6 +333,7 @@
           this.getSocio();
           this.getSocios();
           this.getModalidades();
+          this.getModalidadesLivres();
       }
     }
 </script>
