@@ -153,7 +153,7 @@
           });
         },
         deleteItem (item) {
-          let response = confirm('Are you sure you want to delete this item?');
+          let response = confirm('Tem aa certeza que deseja remover a inscrição?');
           if(response == true){
               this.$axios.$delete('/api/inscricoes/'+item.code).then( inscricoes =>
                 {
