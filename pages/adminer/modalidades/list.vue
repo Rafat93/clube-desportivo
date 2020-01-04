@@ -4,15 +4,6 @@
       <v-col>
         <v-btn color="primary" to="/adminer/modalidades/criar_modalidade" >Criar Modalidade</v-btn>
       </v-col>
-      <v-col>
-        <v-btn color="primary">Primary</v-btn>
-      </v-col>
-      <v-col>
-        <v-btn color="primary">Primary</v-btn>
-      </v-col>
-      <v-col>
-        <v-btn color="primary">Primary</v-btn>
-      </v-col>
     </v-row>
     <v-data-table
       :headers="headers"

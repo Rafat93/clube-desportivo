@@ -2,7 +2,7 @@
 
   <v-data-table
     :headers="headers"
-    :items="socios"
+    :items="treinos"
     :items-per-page="10"
     class="elevation-1"
   >

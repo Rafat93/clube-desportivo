@@ -313,6 +313,12 @@
               value: 'code'
             },
             {
+              text: 'Dia Semana',
+              align: 'left',
+              sortable: false,
+              value: 'diaSemana'
+            },
+            {
               text: 'Hora de Inicio',
               align: 'left',
               sortable: false,
@@ -432,7 +438,7 @@
           this.$router.push('/adminer/modalidades/'+this.$route.params.sigla+'/criar_treino');
         },
         adicionarTreinador(){
-          this.$axios.$put('/api/treinadores/'+this.treinadorSelecionado+'/modalidade/enroll/'+this.$route.params.sigla,{
+          this.$axios.$put('/api/treinadores/'+this.treinadorSelecionado+'/modalidades/enroll/'+this.$route.params.sigla,{
             email: this.treinadorSelecionado,
             sigla: this.$route.params.sigla,
           }).
@@ -456,13 +462,13 @@
             // CONFIRMAR SE EXISTEM ATLETAS NA MODALIDADE
             if (this.atletas.length != 0){
               this.color = 'red';
-              this.text = 'Não é possivel remover a modalidade, porque existem atletas nela inscritos.';
+              this.text = 'Não é possivel remover a modalidades, porque existem atletas nela inscritos.';
               this.snackbar = true;
             }
             // CONFIRMAR SE EXISTEM TREINADORES NA MODALIDADE
             if (this.treinadores.length != 0){
               this.color = 'red';
-              this.text = 'Não é possivel remover a modalidade, porque existem treinadores nela inscritos.';
+              this.text = 'Não é possivel remover a modalidades, porque existem treinadores nela inscritos.';
               this.snackbar = true;
             }
             // REMOVER A MODALIDADE
@@ -480,7 +486,7 @@
         },
         deleteAtleta(item){
 
-          this.$axios.$put('/api/atletas/'+item.email+'/modalidade/unroll/'+this.$route.params.sigla)
+          this.$axios.$put('/api/atletas/'+item.email+'/modalidades/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getAtletas();
             }).catch(error => {
@@ -488,7 +494,7 @@
           });
         },
         deleteTreinador(item){
-          this.$axios.$put('/api/treinadores/'+item.email+'/modalidade/unroll/'+this.$route.params.sigla)
+          this.$axios.$put('/api/treinadores/'+item.email+'/modalidades/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getTreinadores();
             }).catch(error => {
@@ -497,7 +503,7 @@
         },
         deleteEscalao(item){
           console.log(item);
-          this.$axios.$put('/api/escaloes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
+          this.$axios.$put('/api/escaloes/'+item.code+'/modalidades/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getEscaloes();
             }).catch(error => {
@@ -506,7 +512,7 @@
         },
         deleteGraduacao(item){
           console.log(item);
-          this.$axios.$put('/api/graduacoes/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
+          this.$axios.$put('/api/graduacoes/'+item.code+'/modalidades/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getGraduacoes();
             }).catch(error => {
@@ -515,7 +521,7 @@
         },
         deleteTreino(item){
           console.log(item);
-          this.$axios.$put('/api/treinos/'+item.code+'/modalidade/unroll/'+this.$route.params.sigla)
+          this.$axios.$put('/api/treinos/'+item.code+'/modalidades/unroll/'+this.$route.params.sigla)
             .then(() => {
               this.getTreinos();
             }).catch(error => {

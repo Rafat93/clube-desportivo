@@ -242,9 +242,9 @@ export default {
           to: '/perfil/info'
         },
         {
-          icon: 'mdi-account',
-          title: 'Modalidade',
-          to: '/modalidade/list'
+          icon: 'mdi-basketball',
+          title: 'Modalidades',
+          to: '/modalidades/list'
         }
       ],
       items_socio: [
@@ -259,9 +259,9 @@ export default {
           to: '/perfil/info'
         },
         {
-          icon: 'mdi-account',
-          title: 'Modalidade',
-          to: '/modalidade/list'
+          icon: 'mdi-basketball',
+          title: 'Modalidades',
+          to: '/modalidades/list'
         }
       ],
       items_treinador: [
@@ -276,9 +276,9 @@ export default {
           to: '/perfil/info'
         },
         {
-          icon: 'mdi-account',
-          title: 'Modalidade',
-          to: '/modalidade/list'
+          icon: 'mdi-basketball',
+          title: 'Modalidades',
+          to: '/modalidades/list'
         }
       ],
       miniVariant: false,

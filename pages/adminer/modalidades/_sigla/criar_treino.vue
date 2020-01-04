@@ -170,7 +170,7 @@
               diaSemana: this.diaSemSelecionado
             })
               .then(() => {
-                this.$axios.$put("/api/treinos/"+this.code+"/modalidade/enroll/"+this.$route.params.sigla, {
+                this.$axios.$put("/api/treinos/"+this.code+"/modalidades/enroll/"+this.$route.params.sigla, {
                   code: this.code,
                   siglaModalidade: this.$route.params.sigla,
                 }).then(() => {

@@ -4,7 +4,8 @@
       <v-col>
         <v-card>
           <v-card-title class="justify-center">
-            Informações Pessoais
+            <div>Informações Pessoais</div>
+            <v-btn small style="margin-left: 20px;">Editar</v-btn>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
@@ -52,7 +53,7 @@
       </v-col>
     </v-row>
     <v-row v-if="this.$auth.user.groups == 'Atleta' || this.$auth.user.groups == 'Treinador'">
-      <v-col cols="10">
+      <v-col>
         <v-card>
           <v-card-title class="justify-center">
             Modalidades
@@ -137,6 +138,7 @@
         },
         redirectInfo(item){
 
+          this.$router.push("/modalidades/"+item.sigla+"/info");
         }
 
       },
