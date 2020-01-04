@@ -215,16 +215,6 @@ export default {
           to: '/adminer/atletas/list'
         },
         {
-          icon: 'mdi-diamond-stone',
-          title: 'Produtos',
-          to: '/adminer/produtos/list'
-        },
-        {
-          icon: 'mdi-check-box-outline',
-          title: 'Inscrições',
-          to: '/adminer/inscricoes/list'
-        },
-        {
           icon: 'mdi-account-group',
           title: 'Sócios',
           to: '/adminer/socios/list'
@@ -234,6 +224,22 @@ export default {
           title: 'Treinadores',
           to: '/adminer/treinadores/list'
         },
+        {
+          icon: 'mdi-account-tie',
+          title: 'Administradores',
+          to: '/adminer/admins/list'
+        },
+        {
+          icon: 'mdi-diamond-stone',
+          title: 'Produtos',
+          to: '/adminer/produtos/list'
+        },
+        {
+          icon: 'mdi-check-box-outline',
+          title: 'Inscrições',
+          to: '/adminer/inscricoes/list'
+        },
+
         {
           icon: 'mdi-information-outline',
           title: 'Sobre',

@@ -44,7 +44,7 @@
       class="mr-4"
       @click="validate"
     >
-      Validate
+      Submeter
     </v-btn>
 
     <v-btn
@@ -52,14 +52,14 @@
       class="mr-4"
       @click="reset"
     >
-      Reset Form
+      Reset Formulário
     </v-btn>
 
     <v-btn
       color="warning"
       @click="resetValidation"
     >
-      Reset Validation
+      Reset Validação
     </v-btn>
   </v-form>
 </template>

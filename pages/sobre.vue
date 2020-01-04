@@ -15,7 +15,21 @@
 
 <script>
     export default {
-        name: "sobre"
+        name: "sobre",
+      data: () => ({
+          clube: '',
+      }),
+      methods:{
+          getClube(){
+            this.$axios.$get('/api/clube/').then((clube) => {
+              this.clube = clube;
+            });
+          }
+      },
+      created() {
+          this.getClube();
+      }
+
     }
 </script>
 

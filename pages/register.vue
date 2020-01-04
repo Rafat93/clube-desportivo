@@ -180,8 +180,8 @@
 
         email: '',
         emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+          v => !!v || 'Email é um campo obrigatório',
+          v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido',
         ],
 
       }),
@@ -189,11 +189,6 @@
       methods: {
         formatDate (date) {
           return moment(date).format('DD-MM-YYYY')
-        },
-        getModalidades (){
-          this.$axios.$get('/api/modalidades/').then((modalidades) => {
-            this.modalidades = modalidades;
-          });
         },
         validate () {
           if (this.$refs.form.validate()) {
@@ -231,7 +226,6 @@
         },
       },
       created() {
-        this.getModalidades();
       },
       computed:{
         getEndDate(){
