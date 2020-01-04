@@ -31,7 +31,6 @@
       :close-on-content-click="false"
       transition="scale-transition"
       offset-y
-      full-width
       max-width="290px"
       min-width="290px"
     >
@@ -56,15 +55,22 @@
     <v-text-field
       v-model="atleta.numIdentificacaoCivil"
       :counter="9"
-      :rules="numIdentificacaoCivilRules"
+      :rules="nicRules"
       label="Nº Identificação Civil"
       required
     ></v-text-field>
     <v-text-field
       v-model="atleta.numContribuinte"
+      :rules="nifRules"
       :counter="9"
-      :rules="numIdentificacaoCivilRules"
       label="Nº Identificação Civil"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="atleta.morada"
+      :rules="moradaRules"
+      label="Morada"
+      :counter="80"
       required
     ></v-text-field>
 
@@ -111,6 +117,22 @@
       showPicker: false,
       selectedDate: '',
 
+      nomeRules:[
+        v => !!v || 'Nome é um campo obrigatório',
+        v => (v && v.length <= 20 ) || 'Nome deve ter até 20 caracteres.',
+      ],
+      nifRules:[
+        v => !!v || 'NIF é um campo obrigatório',
+        v => (v && v.length ===  9) || 'NIF deve ter 9 algarismos. ',
+      ],
+      nicRules:[
+        v => !!v || 'Nº Identificação Civil é um campo obrigatório',
+        v => (v && v.length ===  9) || 'Nº Identificação Civil deve ter 9 algarismos. ',
+      ],
+      moradaRules:[
+        v => !!v || 'Morada é um campo obrigatório',
+        v => (v && v.length <= 80 ) || 'Morada deve ter menos de 80 caracteres.',
+      ],
     }),
     methods: {
       formatDate (date) {
@@ -124,13 +146,19 @@
       },
       validate () {
         if (this.$refs.form.validate()) {
+          console.log("data nascimento: "+this.selectedDate);
+          if(this.selectedDate === ''){
+            this.selectedDate = this.atleta.dataNascimento;
+          }
           this.$axios.$put('/api/atletas/'+this.$route.params.email, {
-            numeroSocio: this.numeroSocio,
-            nome: this.nome,
-            email: this.email,
-            dataNascimento: this.dataNascimento,
-            numIdentificacaoCivil: this.numIdentificacaoCivil,
-            numContribuinte: this.numContribuinte,
+            numeroSocio: this.atleta.numeroSocio,
+            nome: this.atleta.nome,
+            email: this.atleta.email,
+            password: this.atleta.password,
+            dataNascimento: this.selectedDate,
+            numIdentificacaoCivil: this.atleta.numIdentificacaoCivil,
+            numContribuinte: this.atleta.numContribuinte,
+            morada: this.atleta.morada,
           })
             .then(() => {
               this.$router.push('/adminer/atletas/'+this.$route.params.email+'/info');
@@ -147,7 +175,7 @@
         this.$refs.form.resetValidation()
       },
       cancel(){
-        this.$router.push('/adminer/atletas/'+this.$router.params.email+"/info")
+        this.$router.push('/adminer/atletas/'+this.$route.params.email+"/info")
       }
     },
     created() {
