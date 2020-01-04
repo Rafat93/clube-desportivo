@@ -146,7 +146,6 @@
         },
         cancel(){
           this.$router.push('/adminer/produtos/list')
-
         }
       }
     }
