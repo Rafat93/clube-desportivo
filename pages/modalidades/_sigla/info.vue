@@ -50,11 +50,6 @@
                         :items-per-page="10"
                         class="elevation-1"
                       >
-                        <template v-slot:item.action="{ item }" >
-                          <v-icon @click="deleteTreino(item)">
-                            {{'mdi-information-outline'}}
-                          </v-icon>
-                        </template>
                       </v-data-table>
                     </div>
                   </div>
@@ -80,11 +75,6 @@
                         :items-per-page="10"
                         class="elevation-1"
                       >
-                        <template v-slot:item.action="{ item }" >
-                          <v-icon @click="deleteEscalao(item)">
-                            {{'mdi-information-outline'}}
-                          </v-icon>
-                        </template>
                       </v-data-table>
                     </div>
                   </div>
@@ -105,11 +95,7 @@
                         :items="graduacoes"
                         :items-per-page="10"
                         class="elevation-1"
-                      ><template v-slot:item.action="{ item }" >
-                        <v-icon @click="deleteGraduacao(item)">
-                          {{'mdi-information-outline'}}
-                        </v-icon>
-                      </template>
+                      >
                       </v-data-table>
                     </div>
                   </div>
@@ -165,7 +151,7 @@
               sortable: false,
               value: 'horaFim'
             },
-            { text: 'Ações', value: 'action', sortable: false },
+
           ],
           headers_escaloes:[
             {
@@ -186,7 +172,7 @@
               sortable: false,
               value: 'idadeMax'
             },
-            { text: 'Ações', value: 'action', sortable: false },
+
           ],
           headers_graduacoes:[
             {
@@ -195,22 +181,7 @@
               sortable: false,
               value: 'nome'
             },
-            { text: 'Ações', value: 'action', sortable: false },
-          ],
-          headers_atletas:[
-            {
-              text: 'Nome',
-              align: 'left',
-              sortable: false,
-              value: 'nome'
-            },
-            {
-              text: 'Nº Sócio',
-              align: 'left',
-              sortable: false,
-              value: 'numeroSocio'
-            },
-            { text: 'Ações', value: 'action', sortable: false },
+
           ],
           headers_treinadores:[
             {
