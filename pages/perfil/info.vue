@@ -50,6 +50,9 @@
                     </div>
                   </div>
                 </v-col>
+                <v-col>
+                  <v-btn small style="margin-bottom: -50px;" @click="redirectCriar"><v-icon>{{'mdi-plus'}}</v-icon> Inscrição numa Modalidade</v-btn>
+                </v-col>
               </v-row>
             </div>
           </v-card-text>
@@ -142,11 +145,12 @@
         },
         editarPerfil(){
           this.$router.push("/perfil/"+this.user.email+"/editar");
-
         },
         redirectInfo(item){
-
           this.$router.push("/modalidades/"+item.sigla+"/info");
+        },
+        redirectCriar(){
+          this.$router.push("/perfil/inscricao_modalidade");
         }
 
       },
