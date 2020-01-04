@@ -50,7 +50,6 @@
             this.atletas = atletas
           });
       },
-
     },
     created () {
       this.getAtletas();

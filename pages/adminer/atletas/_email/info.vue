@@ -72,8 +72,7 @@
           <v-divider></v-divider>
           <v-card-text class="justify-center">
             <v-btn small color="primary"  width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Modalidade</v-btn>
-            <v-btn small v-on="on" color="warning" width="130px;" @click="editarAtleta" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
-
+            <v-btn small color="warning" width="130px;" @click="editarAtleta" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
 
             <!--DIALOG PARA ALTERAR A PASSWORD-->
             <v-dialog v-model="dialog_password" width="700">
@@ -96,18 +95,17 @@
                   <v-text-field
                     v-model="new_password_given"
                     :counter="10"
-                    label="Nº Cédula"
+                    label="Nova Password"
                     type="password"
                     required
                   ></v-text-field>
                   <v-text-field
                     v-model="confirmation_password_given"
                     :counter="10"
-                    label="Nº Cédula"
+                    label="Confirmação da Password"
                     type="password"
                     required
                   ></v-text-field>
-
                 </v-card-text>
                 <v-divider></v-divider>
 
@@ -167,6 +165,7 @@
         confirmation_password_given: '',
         new_password_given: '',
         atletas: [],
+
         //Snackbar
         color: '',
         mode: '',
@@ -176,8 +175,10 @@
         x: null,
         y: 'top',
         //---------
+
         // --- Edit dialog ---
         dialog: false,
+        //-------------------
         nomeRules: [
           v => !!v || 'Name é um campo obrigatório',
           v => (v && v.length <= 30) || 'Nome deve ter até 30 caracteres',
@@ -215,6 +216,12 @@
             this.atletas = atletas;
           });
       },
+      getModalidades(){
+        this.$axios.$get('/api/atletas/'+this.$route.params.email+'/modalidades/')
+          .then((modalidades) => {
+            this.modalidades = modalidades;
+          });
+      },
       deleteAtleta(){
         let response = confirm('Tem a certeza que pretende eliminar o atleta?');
         if(response == true){
@@ -223,17 +230,21 @@
               this.color = 'green';
               this.text = 'Atleta - '+this.atleta.nome+' - eliminado com sucesso!';
               this.snackbar = true;
-
-              this.atletas();
+              this.getAtletas();
               setTimeout(() => {
                 this.$router.push('/adminer/atletas/list');
-              }, 2000)
+              }, 2000);
             }
           );
         }
       },
       editarAtleta(){
         this.$router.push("/adminer/atletas/"+this.$route.params.email+"/editar_atleta");
+      },
+      cancelEditar(){
+        this.dialog = false;
+        this.getTreinador();
+        this.dialog_password = false;
       },
       passwordEditar(){
         console.log("CHEGOU AQUI");
@@ -259,9 +270,11 @@
     created() {
       this.getAtleta();
       this.getAtletas();
+      this.getModalidades();
     }
   }
 </script>
+
 <style scoped>
   .group-form{
     margin-top: 8px;

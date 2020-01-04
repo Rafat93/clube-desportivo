@@ -115,14 +115,14 @@
                   <v-text-field
                     v-model="new_password_given"
                     :counter="10"
-                    label="Nº Cédula"
+                    label="Nova Password"
                     type="password"
                     required
                   ></v-text-field>
                   <v-text-field
                     v-model="confirmation_password_given"
                     :counter="10"
-                    label="Nº Cédula"
+                    label="Confirmação da Password"
                     type="password"
                     required
                   ></v-text-field>
