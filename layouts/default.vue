@@ -191,6 +191,11 @@ export default {
           title: 'Register',
           to: '/register'
         },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
 
       itemsAdmin: [
@@ -229,6 +234,11 @@ export default {
           title: 'Treinadores',
           to: '/adminer/treinadores/list'
         },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       items_atleta: [
         {
@@ -250,7 +260,12 @@ export default {
           icon: 'mdi-basketball',
           title: 'Produtos',
           to: '/produtos/list'
-        }
+        },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       items_socio: [
         {
@@ -272,7 +287,12 @@ export default {
           icon: 'mdi-basketball',
           title: 'Produtos',
           to: '/produtos/list'
-        }
+        },
+        {
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       items_treinador: [
         {
@@ -289,7 +309,11 @@ export default {
           icon: 'mdi-basketball',
           title: 'Modalidades',
           to: '/modalidades/list'
-        }
+        },{
+          icon: 'mdi-information-outline',
+          title: 'Sobre',
+          to: '/sobre'
+        },
       ],
       miniVariant: false,
       right: true,
