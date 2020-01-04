@@ -60,7 +60,7 @@
               sortable: false,
               value: 'email'
             },
-            { text: 'Actions', value: 'action', sortable: false },
+            { text: 'Ações', value: 'action', sortable: false },
 
           ],
           treinadores: [],

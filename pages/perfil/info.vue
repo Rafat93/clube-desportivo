@@ -5,7 +5,6 @@
         <v-card>
           <v-card-title class="justify-center">
             Informações Pessoais
-            {{user}}
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
@@ -57,7 +56,6 @@
         <v-card>
           <v-card-title class="justify-center">
             Modalidades
-            {{modalidades}}
           </v-card-title>
           <v-card-text>
             <v-divider></v-divider>
@@ -67,7 +65,13 @@
                 :items="modalidades"
                 :items-per-page="10"
                 class="elevation-1"
-              >
+              ><template v-slot:item.action="{ item }" >
+                <v-icon
+                  @click="redirectInfo(item)"
+                >
+                  {{'mdi-information-outline'}}
+                </v-icon>
+              </template>
               </v-data-table>
             </div>
           </v-card-text>
@@ -97,6 +101,7 @@
             sortable: false,
             value: 'sigla'
           },
+          { text: 'Actions', value: 'action', sortable: false },
         ]
       }),
       methods:{
@@ -128,6 +133,9 @@
               this.modalidades = modalidades;
             });
           }
+
+        },
+        redirectInfo(item){
 
         }
 
