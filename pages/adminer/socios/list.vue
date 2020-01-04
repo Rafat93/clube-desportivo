@@ -1,10 +1,18 @@
 <template>
+
   <v-data-table
     :headers="headers"
     :items="socios"
     :items-per-page="10"
     class="elevation-1"
   >
+    <template v-slot:item.action="{ item }" >
+      <v-icon
+        @click="redirectInfo(item)"
+      >
+        {{'mdi-information-outline'}}
+      </v-icon>
+    </template>
   </v-data-table>
 </template>
 
@@ -27,29 +35,12 @@
               value: 'nome'
             },
             {
-              text: 'Data Nascimento',
+              text: 'Email',
               align: 'left',
               sortable: false,
-              value: 'dataNascimento'
+              value: 'email'
             },
-            {
-              text: 'Nº Identificação Civil',
-              align: 'left',
-              sortable: true,
-              value: 'numIdentificacaoCivil'
-            },
-            {
-              text: 'Nº Identificação Fiscal',
-              align: 'left',
-              sortable: true,
-              value: 'numContribuinte'
-            },
-            {
-              text: 'Morada',
-              align: 'left',
-              sortable: false,
-              value: 'morada'
-            },
+            { text: 'Actions', value: 'action', sortable: false },
 
           ],
           socios: []
@@ -59,14 +50,17 @@
           this.getSocios();
       },
       methods:{
-          getSocios (){
-            this.$axios.$get('/api/socios')
-              .then((socios) => {
-                this.socios = socios;
-              }).catch(error => {
-                this.$toast.show(error)
-                });
-            },
+        redirectInfo(item){
+          this.$router.push('/adminer/socios/'+item.email+'/info');
+        },
+        getSocios (){
+          this.$axios.$get('/api/socios')
+            .then((socios) => {
+              this.socios = socios;
+            }).catch(error => {
+              this.$toast.show(error)
+              });
+        },
 
       }
     }

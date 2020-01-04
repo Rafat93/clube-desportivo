@@ -3,24 +3,24 @@
     ref="form"
     v-model="valid"
     lazy-validation
-    >
-    <p class="subtitle-1 text-center">Edição do Atleta: {{this.atleta.nome}}</p>
+  >
+    <p class="subtitle-1 text-center">Edição do Socio: {{this.socio.nome}}</p>
     <v-text-field
-      v-model="atleta.numeroSocio"
+      v-model="socio.numeroSocio"
       :counter="10"
       label="Nº Sócio"
       required
       disabled
     ></v-text-field>
     <v-text-field
-      v-model="atleta.nome"
+      v-model="socio.nome"
       :counter="30"
       :rules="nomeRules"
       label="Nome"
       required
     ></v-text-field>
     <v-text-field
-      v-model="atleta.email"
+      v-model="socio.email"
       :counter="30"
       label="Email"
       required
@@ -37,7 +37,7 @@
     >
       <template v-slot:activator="{ on }">
         <v-text-field
-          v-model="atleta.dataNascimento"
+          v-model="socio.dataNascimento"
           label="Data de Nascimento:"
           hint="YYYY/MM/DD"
           persistent-hint
@@ -54,14 +54,14 @@
 
     </v-menu>
     <v-text-field
-      v-model="atleta.numIdentificacaoCivil"
+      v-model="socio.numIdentificacaoCivil"
       :counter="9"
       :rules="numIdentificacaoCivilRules"
       label="Nº Identificação Civil"
       required
     ></v-text-field>
     <v-text-field
-      v-model="atleta.numContribuinte"
+      v-model="socio.numContribuinte"
       :counter="9"
       :rules="numIdentificacaoCivilRules"
       label="Nº Identificação Civil"
@@ -103,10 +103,10 @@
 </template>
 <script>
   export default {
-    name: "editar_atleta",
+    name: "editar_socio",
     data: () => ({
-      valid: true,
-      atleta:'',
+      valid:true,
+      socio:'',
       old_password:'',
       showPicker: false,
       selectedDate: '',
@@ -116,15 +116,15 @@
       formatDate (date) {
         return moment(date).format('DD-MM-YYYY')
       },
-      getAtleta(){
-        this.$axios.$get('/api/atletas/'+this.$route.params.email+'/').then((atleta) => {
-          this.atleta = atleta;
-          this.old_password = atleta.password;
+      getSocio(){
+        this.$axios.$get('/api/socios/'+this.$route.params.email+'/').then((socio) => {
+          this.socio = socio;
+          this.old_password = socio.password;
         });
       },
       validate () {
         if (this.$refs.form.validate()) {
-          this.$axios.$put('/api/atletas/'+this.$route.params.email, {
+          this.$axios.$put('/api/socios/'+this.$route.params.email, {
             numeroSocio: this.numeroSocio,
             nome: this.nome,
             email: this.email,
@@ -133,7 +133,7 @@
             numContribuinte: this.numContribuinte,
           })
             .then(() => {
-              this.$router.push('/adminer/atletas/'+this.$route.params.email+'/info');
+              this.$router.push('/adminer/socios/'+this.$route.params.email+'/info');
             })
             .catch(error => {
               console.log(error)
@@ -147,11 +147,11 @@
         this.$refs.form.resetValidation()
       },
       cancel(){
-        this.$router.push('/adminer/atletas/'+this.$router.params.email+"/info")
+        this.$router.push('/adminer/socios/'+this.$router.params.email+"/info")
       }
     },
     created() {
-      this.getAtleta();
+      this.getSocio();
     }
   }
 </script>

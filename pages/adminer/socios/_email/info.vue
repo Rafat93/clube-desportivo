@@ -30,33 +30,33 @@
                 <v-col>
                   <div class="group-form">
                     <div class="input">Nº Socio:</div>
-                    {{atleta.numeroSocio}}
+                    {{socio.numeroSocio}}
                   </div>
                   <div class="group-form">
                     <div class="input">Nome:</div>
-                    {{atleta.nome}}
+                    {{socio.nome}}
                   </div>
                   <div class="group-form">
                     <div class="input">Email:</div>
-                    {{atleta.email}}
+                    {{socio.email}}
                   </div>
                   <div class="group-form">
                     <div class="input">Data de Nascimento:</div>
-                    {{atleta.dataNascimento}}
+                    {{socio.dataNascimento}}
                   </div>
                 </v-col>
                 <v-col>
                   <div class="group-form">
                     <div class="input">Nº Identificação Civil:</div>
-                    {{atleta.numIdentificacaoCivil}}
+                    {{socio.numIdentificacaoCivil}}
                   </div>
                   <div class="group-form">
                     <div class="input">Nº Identificação Fiscal:</div>
-                    {{atleta.numContribuinte}}
+                    {{socio.numContribuinte}}
                   </div>
                   <div class="group-form">
                     <div class="input">Morada:</div>
-                    {{atleta.morada}}
+                    {{socio.morada}}
                   </div>
                 </v-col>
               </v-row>
@@ -71,19 +71,19 @@
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="justify-center">
-            <v-btn small color="primary"  width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Modalidade</v-btn>
-            <v-btn small color="warning" width="130px;" @click="editarAtleta" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
+            <v-btn small color="primary"  width="130px;" @click="subscreverModalidade" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Subscrever</v-btn>
+            <v-btn small color="warning" width="130px;" @click="editarSocio" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
 
             <!--DIALOG PARA ALTERAR A PASSWORD-->
             <v-dialog v-model="dialog_password" width="700">
               <v-card>
                 <v-card-title class="headline grey lighten-2" primary-title>
-                  Editar o atleta - {{atleta.nome}} - password
+                  Editar o socio - {{socio.nome}} - password
                 </v-card-title>
 
                 <v-card-text>
                   <br>
-                  <!--FORMULARIO PARA EDITAR A PASSWORD DO atleta-->
+                  <!--FORMULARIO PARA EDITAR A PASSWORD DO socio-->
                   {{old_password}}
                   <v-text-field
                     v-model="old_password_given"
@@ -123,7 +123,7 @@
                 <v-btn small color="warning" v-on="on" width="130px;"  style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp;Password </v-btn>
               </template>
             </v-dialog>
-            <v-btn small color="error" width="130px;"  style="margin-bottom: 5px;" @click="deleteAtleta"><v-icon small>{{'mdi-delete'}}</v-icon> &nbsp;Delete </v-btn>
+            <v-btn small color="error" width="130px;"  style="margin-bottom: 5px;" @click="deleteSocio"><v-icon small>{{'mdi-delete'}}</v-icon> &nbsp;Delete </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -143,6 +143,7 @@
                 :items-per-page="10"
                 class="elevation-1"
               >
+
               </v-data-table>
             </div>
           </v-card-text>
@@ -153,125 +154,130 @@
 </template>
 
 <script>
-  export default {
-    name: "info",
-    data (){
-      return {
-        atleta:'',
-        old_password: '',
-        password_confirmation: '',
-        old_password_given: '',
-        confirmation_password_given: '',
-        new_password_given: '',
-        atletas: [],
+    export default {
+        name: "info",
+      data (){
+          return {
+            old_password: '',
+            password_confirmation: '',
+            old_password_given: '',
+            confirmation_password_given: '',
+            new_password_given: '',
 
-        //Snackbar
-        color: '',
-        mode: '',
-        snackbar: false,
-        text: '',
-        timeout: 4000,
-        x: null,
-        y: 'top',
-        //---------
+            socio: '',
+            socios: [],
 
-        // --- Edit dialog ---
-        dialog: false,
-        //-------------------
-        nomeRules: [
-          v => !!v || 'Name é um campo obrigatório',
-          v => (v && v.length <= 30) || 'Nome deve ter até 30 caracteres',
-        ],
-        // --- Edit Password dialog ---
-        dialog_password: false,
-        // ----------
-        modalidades:[],
-        headers_modalidades:[
-          {
-            text: 'Nome',
-            align: 'left',
-            sortable: false,
-            value: 'nome'
-          },
-          {
-            text: 'Sigla',
-            align: 'left',
-            sortable: false,
-            value: 'sigla'
-          },
-        ]
-      }
-    },
-    methods:{
-      getAtleta(){
-        this.$axios.$get('/api/atletas/'+this.$route.params.email+'/').then((atleta) => {
-          this.atleta = atleta;
-          this.old_password = atleta.password;
-        });
-      },
-      getAtletas(){
-        this.$axios.$get('/api/atletas')
-          .then((atletas) => {
-            this.atletas = atletas;
-          });
-      },
-      getModalidades(){
-        this.$axios.$get('/api/atletas/'+this.$route.params.email+'/modalidades/')
-          .then((modalidades) => {
-            this.modalidades = modalidades;
-          });
-      },
-      deleteAtleta(){
-        let response = confirm('Tem a certeza que pretende eliminar o atleta?');
-        if(response == true){
-          this.$axios.$delete('/api/atletas/'+this.atleta.email).then( atleta =>
-            {
-              this.color = 'green';
-              this.text = 'Atleta - '+this.atleta.nome+' - eliminado com sucesso!';
-              this.snackbar = true;
-              this.getAtletas();
-              setTimeout(() => {
-                this.$router.push('/adminer/atletas/list');
-              }, 2000);
-            }
-          );
-        }
-      },
-      editarAtleta(){
-        this.$router.push("/adminer/atletas/"+this.$route.params.email+"/editar_atleta");
-      },
-      cancelEditar(){
-        this.dialog = false;
-        this.getTreinador();
-        this.dialog_password = false;
-      },
-      passwordEditar(){
-        console.log("CHEGOU AQUI");
-        if (this.old_password === this.old_password_given){
-          console.log("IGUAL");
-        }
-        /*this.$axios.$put('/api/treinadores/'+this.treinador.email+'/',{
+            //Snackbar
+            color: '',
+            mode: '',
+            snackbar: false,
+            text: '',
+            timeout: 4000,
+            x: null,
+            y: 'top',
+            //---------
 
-          nome: this.treinador.nome,
-          password: this.treinador.password,
-          email: this.treinador.email,
-          numeroCedula: this.treinador.numeroCedula
+            // --- Edit dialog ---
+            dialog: false,
+            //-------------------
 
-        }).then(
-          () => {
-            this.dialog = false;
+            nomeRules: [
+              v => !!v || 'Name é um campo obrigatório',
+              v => (v && v.length <= 30) || 'Nome deve ter até 30 caracteres',
+            ],
+            // --- Edit Password dialog ---
+            dialog_password: false,
+            // ----------
+            modalidades:[],
+            headers_modalidades:[
+              {
+                text: 'Nome',
+                align: 'left',
+                sortable: false,
+                value: 'nome'
+              },
+              {
+                text: 'Sigla',
+                align: 'left',
+                sortable: false,
+                value: 'sigla'
+              },
+            ]
           }
-        ).catch(error => {
-          console.log(error)
-        })*/
       },
-    },
-    created() {
-      this.getAtleta();
-      this.getAtletas();
-      this.getModalidades();
+      methods:{
+        getSocio(){
+          this.$axios.$get('/api/socios/'+this.$route.params.email+'/').then((socio) => {
+            this.socio = socio;
+            this.old_password = socio.password;
+          });
+        },
+        getSocios(){
+          this.$axios.$get('/api/socios')
+            .then((socios) => {
+              this.socios = socios;
+            });
+        },
+        getModalidades(){
+          this.$axios.$get('/api/socios/'+this.$route.params.email+'/modalidades_subscritas/')
+            .then((modalidades) => {
+              this.modalidades = modalidades;
+            });
+        },
+        subscreverModalidade(){
+
+        },
+        deleteSocio(){
+          let response = confirm('Tem a certeza que pretende eliminar o socio?');
+          if(response == true){
+            this.$axios.$delete('/api/socios/'+this.atleta.email).then( socio =>
+              {
+                this.color = 'green';
+                this.text = 'Socio - '+this.socio.nome+' - eliminado com sucesso!';
+                this.snackbar = true;
+                this.getSocios();
+                setTimeout(() => {
+                  this.$router.push('/adminer/socios/list');
+                }, 2000);
+              }
+            );
+          }
+        },
+        editarSocio(){
+          this.$router.push("/adminer/socios/"+this.$route.params.email+"/editar_socio");
+        },
+        cancelEditar(){
+          this.dialog = false;
+          this.getTreinador();
+          this.dialog_password = false;
+        },
+        passwordEditar(){
+          console.log("CHEGOU AQUI");
+          if (this.old_password === this.old_password_given){
+            console.log("IGUAL");
+          }
+          /*this.$axios.$put('/api/treinadores/'+this.treinador.email+'/',{
+
+            nome: this.treinador.nome,
+            password: this.treinador.password,
+            email: this.treinador.email,
+            numeroCedula: this.treinador.numeroCedula
+
+          }).then(
+            () => {
+              this.dialog = false;
+            }
+          ).catch(error => {
+            console.log(error)
+          })*/
+        },
+      },
+      created() {
+          this.getSocio();
+          this.getSocios();
+          this.getModalidades();
+      }
     }
-  }
 </script>
 
 <style scoped>
