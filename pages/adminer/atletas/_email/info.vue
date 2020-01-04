@@ -71,7 +71,7 @@
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="justify-center">
-            <v-btn small color="primary"  width="130px;" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Modalidade</v-btn>
+            <v-btn small color="primary"  width="130px;" @click="inscreverModalidade" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-plus'}}</v-icon> Modalidade</v-btn>
             <v-btn small color="warning" width="130px;" @click="editarAtleta" style="margin-bottom: 5px;" ><v-icon small>{{'mdi-pencil'}}</v-icon> &nbsp; Editar</v-btn>
 
             <!--DIALOG PARA ALTERAR A PASSWORD-->
@@ -244,6 +244,9 @@
         this.dialog = false;
         this.getTreinador();
         this.dialog_password = false;
+      },
+      inscreverModalidade(){
+        this.$router.push("/adminer/atletas/"+this.$route.params.email+"/inscrever_modalidade");
       },
       passwordEditar(){
         console.log("CHEGOU AQUI");
