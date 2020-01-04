@@ -33,9 +33,55 @@
 
 
         <!--  Se não for ADMIN-->
-        <div v-if="this.$auth.user.groups != 'Administrador'">
+        <div v-if="this.$auth.user.groups == 'Atleta'">
           <v-list-item
-            v-for="(item, i) in items"
+            v-for="(item, i) in items_atleta"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.prevent="logout">
+            <v-list-item-action>
+              <v-icon>{{this.itemLogout}}</v-icon>
+            </v-list-item-action>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </div>
+
+        <div v-if="this.$auth.user.groups == 'Treinador'">
+          <v-list-item
+            v-for="(item, i) in items_treinador"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.prevent="logout">
+            <v-list-item-action>
+              <v-icon>{{this.itemLogout}}</v-icon>
+            </v-list-item-action>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </div>
+
+        <div v-if="this.$auth.user.groups == 'Socio'">
+          <v-list-item
+            v-for="(item, i) in items_treinador"
             :key="i"
             :to="item.to"
             router
@@ -184,16 +230,28 @@ export default {
           to: '/adminer/treinadores/list'
         },
       ],
-      items: [
+      items_atleta: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
           to: '/'
         },
         {
+          icon: 'mdi-account',
+          title: 'Perfil',
+          to: '/perfil/info'
+        }
+      ],
+      items_treinador: [
+        {
           icon: 'mdi-apps',
-          title: 'Coisas',
-          to: '/adminer/modalidades/list'
+          title: 'Welcome',
+          to: '/'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Perfil',
+          to: '/perfil/info'
         }
       ],
       miniVariant: false,
