@@ -230,7 +230,7 @@
         deleteSocio(){
           let response = confirm('Tem a certeza que pretende eliminar o socio?');
           if(response == true){
-            this.$axios.$delete('/api/socios/'+this.atleta.email).then( socio =>
+            this.$axios.$delete('/api/socios/'+this.socio.email).then( socio =>
               {
                 this.color = 'green';
                 this.text = 'Socio - '+this.socio.nome+' - eliminado com sucesso!';
